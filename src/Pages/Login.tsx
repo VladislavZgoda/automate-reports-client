@@ -1,79 +1,30 @@
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-
-import { Button } from "@/components/ui/button";
+import LoginForm from "../components/LoginForm";
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
-const formSchema = z.object({
-  login: z.string().nonempty({ message: "Пустое поле." }),
-  password: z.string().nonempty({ message: "Пустое поле." }),
-});
-
-export default function Login() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      login: "",
-      password: "",
-    },
-  });
-
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-  };
-
+export default function LoginPage() {
   return (
-    <div className="flex justify-center items-center h-96 w-screen">
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-4 basis-3xs"
-        >
-          <FormField
-            control={form.control}
-            name="login"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-lg">Логин</FormLabel>
-                <FormControl>
-                  <Input placeholder="ivanovii" {...field} />
-                </FormControl>
-
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-lg">Пароль</FormLabel>
-                <FormControl>
-                  <Input placeholder="qwerty123" {...field} />
-                </FormControl>
-                <FormDescription className="text-sm">
-                  Введите логин и пароль для входа.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit" size="lg">
-            Войти
-          </Button>
-        </form>
-      </Form>
+    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+      <div className="w-full max-w-sm">
+        <div className="flex flex-col gap-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-2xl">Вход</CardTitle>
+              <CardDescription>
+                Введите имя учетной записи и пароль для входа.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <LoginForm />
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     </div>
   );
 }
