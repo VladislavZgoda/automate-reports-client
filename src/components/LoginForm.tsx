@@ -60,7 +60,7 @@ export default function LoginForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-lg">Пароль</FormLabel>
+              <FormLabel className="text-base">Пароль</FormLabel>
               <FormControl>
                 <Input placeholder="Введите свой пароль" {...field} />
               </FormControl>
