@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { use } from "react";
-import { AuthContext } from "../providers/authProvider";
+import AuthContext from "../context/authContext";
 
 const formSchema = z.object({
   login: z.string().nonempty({ message: "Отсутствует имя учетной записи." }),

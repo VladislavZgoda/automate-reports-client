@@ -1,16 +1,6 @@
-import { createContext, useState } from "react";
-
-export const AuthContext = createContext<{
-  accessToken: string;
-  handleLogin: (values: LoginFormValues) => Promise<void>;
-  onLogout: () => void;
-}>({
-  accessToken: "",
-  handleLogin: async () => {
-    await new Promise((resolve) => resolve(undefined));
-  },
-  onLogout: () => null,
-});
+import { useState } from "react";
+import AuthContext from "../context/authContext";
+import type { LoginFormValues } from "src/types";
 
 type AuthProviderProps = {
   children: React.ReactNode;
@@ -18,11 +8,6 @@ type AuthProviderProps = {
 
 type LoginResponse = {
   accessToken: string | undefined;
-};
-
-type LoginFormValues = {
-  login: string;
-  password: string;
 };
 
 export default function AuthProvider({ children }: AuthProviderProps) {
@@ -49,6 +34,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
         throw new Error("400 Bad Request");
       }
 
+      console.log(token)
       setAccessToken(token.accessToken);
     } catch (error) {
       console.error(error);
