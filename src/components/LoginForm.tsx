@@ -22,7 +22,7 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
-  const { onLogin } = use(AuthContext);
+  const { handleLogin } = use(AuthContext);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -33,7 +33,7 @@ export default function LoginForm() {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    await onLogin(values);
+    await handleLogin(values);
   };
 
   return (

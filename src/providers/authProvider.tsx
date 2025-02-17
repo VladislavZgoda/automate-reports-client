@@ -2,11 +2,11 @@ import { createContext, useState } from "react";
 
 export const AuthContext = createContext<{
   accessToken: string;
-  onLogin: (values: LoginFormValues) => Promise<void>;
+  handleLogin: (values: LoginFormValues) => Promise<void>;
   onLogout: () => void;
 }>({
   accessToken: "",
-  onLogin: async () => {
+  handleLogin: async () => {
     await new Promise((resolve) => resolve(undefined));
   },
   onLogout: () => null,
@@ -61,7 +61,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 
   const value = {
     accessToken,
-    onLogin: handleLogin,
+    handleLogin,
     onLogout: handleLogout,
   };
 
