@@ -11,7 +11,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import type { HandleLogin } from "src/types";
+import { use } from "react";
+import { AuthContext } from "../providers/authProvider";
 
 const formSchema = z.object({
   login: z.string().nonempty({ message: "Отсутствует имя учетной записи." }),
@@ -20,7 +21,9 @@ const formSchema = z.object({
     .nonempty({ message: "Отсутствует пароль от учетной записи." }),
 });
 
-export default function LoginForm({ handleLogin }: HandleLogin) {
+export default function LoginForm() {
+  const { onLogin } = use(AuthContext);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -30,7 +33,7 @@ export default function LoginForm({ handleLogin }: HandleLogin) {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    await handleLogin(values);
+    await onLogin(values);
   };
 
   return (
