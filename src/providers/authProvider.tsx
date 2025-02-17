@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import AuthContext from "../context/authContext";
 import type { LoginFormValues } from "src/types";
 
@@ -12,6 +13,7 @@ type LoginResponse = {
 
 export default function AuthProvider({ children }: AuthProviderProps) {
   const [accessToken, setAccessToken] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = async (values: LoginFormValues) => {
     try {
@@ -34,8 +36,8 @@ export default function AuthProvider({ children }: AuthProviderProps) {
         throw new Error("400 Bad Request");
       }
 
-      console.log(token)
       setAccessToken(token.accessToken);
+      await navigate("/");
     } catch (error) {
       console.error(error);
     }
