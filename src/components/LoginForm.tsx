@@ -67,6 +67,7 @@ export default function LoginForm() {
               <FormControl>
                 <Input
                   type="password"
+                  autoComplete="on"
                   placeholder="Введите свой пароль"
                   {...field}
                 />
