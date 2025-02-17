@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -12,6 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import type { HandleLogin } from "src/types";
 
 const formSchema = z.object({
   login: z.string().nonempty({ message: "Отсутствует имя учетной записи." }),
@@ -20,7 +20,7 @@ const formSchema = z.object({
     .nonempty({ message: "Отсутствует пароль от учетной записи." }),
 });
 
-export default function LoginForm() {
+export default function LoginForm({ handleLogin }: HandleLogin) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -29,8 +29,8 @@ export default function LoginForm() {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    await handleLogin(values);
   };
 
   return (
@@ -62,7 +62,11 @@ export default function LoginForm() {
             <FormItem>
               <FormLabel className="text-base">Пароль</FormLabel>
               <FormControl>
-                <Input placeholder="Введите свой пароль" {...field} />
+                <Input
+                  type="password"
+                  placeholder="Введите свой пароль"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

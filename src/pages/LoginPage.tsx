@@ -6,8 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import type { HandleLogin } from "src/types";
 
-export default function LoginPage() {
+export default function LoginPage(props: HandleLogin) {
   return (
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
       <div className="w-full max-w-sm">
@@ -20,7 +21,7 @@ export default function LoginPage() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <LoginForm />
+              <LoginForm {...props} />
             </CardContent>
           </Card>
         </div>
