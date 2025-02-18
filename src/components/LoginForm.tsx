@@ -11,8 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { use } from "react";
-import AuthContext from "../context/authContext";
+import useAuth from "../hooks/useAuth";
 
 const formSchema = z.object({
   login: z.string().nonempty({ message: "Отсутствует имя учетной записи." }),
@@ -22,7 +21,7 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
-  const { handleLogin } = use(AuthContext);
+  const { handleLogin } = useAuth();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
