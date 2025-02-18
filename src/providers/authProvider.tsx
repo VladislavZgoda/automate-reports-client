@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 import AuthContext from "../context/authContext";
 import type { LoginFormValues } from "src/types";
 
@@ -11,9 +11,15 @@ type LoginResponse = {
   accessToken: string | undefined;
 };
 
+type LocationState = {
+  from?: { pathname: string | undefined };
+};
+
 export default function AuthProvider({ children }: AuthProviderProps) {
   const [accessToken, setAccessToken] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+  const state = location.state as LocationState;
 
   const handleLogin = async (values: LoginFormValues) => {
     try {
@@ -37,7 +43,9 @@ export default function AuthProvider({ children }: AuthProviderProps) {
       }
 
       setAccessToken(token.accessToken);
-      await navigate("/");
+
+      const origin = state?.from?.pathname ?? "/";
+      await navigate(origin);
     } catch (error) {
       console.error(error);
     }
