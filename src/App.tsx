@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router";
 import LoginPage from "./pages/LoginPage";
 import AuthProvider from "./providers/authProvider";
 import ProtectedRoute from "./routes/protectedRoute";
+import NotFound from "./pages/404";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         />
 
         <Route path="/login" element={<LoginPage />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </AuthProvider>
   );
