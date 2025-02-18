@@ -1,8 +1,8 @@
-import { Navigate, useLocation } from "react-router";
+import { Navigate, useLocation, Outlet } from "react-router";
 import useAuth from "../hooks/useAuth";
 
 type ProtectedRouteProps = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
@@ -13,5 +13,5 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
     return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
-  return children;
+  return children ?? <Outlet />;
 }

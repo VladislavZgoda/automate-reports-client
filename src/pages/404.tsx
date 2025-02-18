@@ -8,7 +8,10 @@ export default function NotFound() {
         <p className="text-5xl text-gray-600 font-bold">Page not found</p>
       </div>
 
-      <Link to="/" className="text-3xl text-blue-600 underline font-semibold italic">
+      <Link
+        to="/"
+        className="text-3xl text-blue-600 underline font-semibold italic"
+      >
         На главную страницу
       </Link>
     </div>

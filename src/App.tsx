@@ -8,16 +8,16 @@ function App() {
   return (
     <AuthProvider>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
+        <Route element={<ProtectedRoute />}>
+          <Route
+            path="/"
+            element={
               <>
                 <h1 className="text-3xl font-bold underline">Hello World!</h1>
               </>
-            </ProtectedRoute>
-          }
-        />
+            }
+          />
+        </Route>
 
         <Route path="/login" element={<LoginPage />} />
         <Route path="*" element={<NotFound />} />
