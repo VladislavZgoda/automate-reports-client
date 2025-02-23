@@ -1,14 +1,10 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router";
 import AuthContext from "../context/authContext";
-import type { LoginFormValues } from "src/types";
+import type { LoginFormValues, LoginResponse } from "src/types";
 
 type AuthProviderProps = {
   children: React.ReactNode;
-};
-
-type LoginResponse = {
-  accessToken: string | undefined;
 };
 
 type LocationState = {
@@ -23,7 +19,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 
   const handleLogin = async (values: LoginFormValues) => {
     try {
-      const response = await fetch(import.meta.env.VITE_LOGIN_API, {
+      const response = await fetch("api/login", {
         headers: {
           "Content-Type": "application/json",
         },
@@ -33,14 +29,10 @@ export default function AuthProvider({ children }: AuthProviderProps) {
       });
 
       if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
+        throw new Error(`${response.status} ${await response.json()}`);
       }
 
       const token = (await response.json()) as LoginResponse;
-
-      if (!token.accessToken) {
-        throw new Error("400 Bad Request");
-      }
 
       setAccessToken(token.accessToken);
 
@@ -59,6 +51,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     accessToken,
     handleLogin,
     onLogout: handleLogout,
+    setAccessToken,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
