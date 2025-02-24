@@ -25,9 +25,9 @@ function App() {
               />
             </Route>
           </Route>
+          <Route path="/login" element={<LoginPage />} />
         </Route>
 
-        <Route path="/login" element={<LoginPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AuthProvider>
