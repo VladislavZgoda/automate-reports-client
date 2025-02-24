@@ -4,7 +4,7 @@ import { Outlet } from "react-router";
 import type { LoginResponse } from "src/types";
 
 export default function PersistLogin() {
-  const [isLoadning, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const { accessToken, setAccessToken } = useAuth();
 
   const handleRefreshToken = useCallback(async () => {
@@ -36,5 +36,5 @@ export default function PersistLogin() {
     }
   }, [accessToken, handleRefreshToken]);
 
-  return <>{isLoadning ? <p>Loading...</p> : <Outlet />}</>;
+  return <>{isLoading ? <p>Loading...</p> : <Outlet />}</>;
 }
