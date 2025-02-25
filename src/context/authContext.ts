@@ -3,16 +3,20 @@ import type { LoginFormValues } from "src/types";
 
 const AuthContext = createContext<{
   accessToken: string;
+  setAccessToken: (value: string) => void;
+  statusCode: number | null;
+  setStatusCode: (value: number | null) => void;
   handleLogin: (values: LoginFormValues) => Promise<void>;
   onLogout: () => void;
-  setAccessToken: (value: string) => void;
 }>({
   accessToken: "",
+  setAccessToken: () => null,
+  statusCode: null,
+  setStatusCode: () => null,
   handleLogin: async () => {
     await new Promise((resolve) => resolve(undefined));
   },
   onLogout: () => null,
-  setAccessToken: () => null,
 });
 
 export default AuthContext;

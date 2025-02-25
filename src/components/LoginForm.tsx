@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import useAuth from "../hooks/useAuth";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   login: z.string().nonempty({ message: "Отсутствует имя учетной записи." }),
@@ -21,7 +22,7 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
-  const { handleLogin } = useAuth();
+  const { handleLogin, statusCode, setStatusCode } = useAuth();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -31,7 +32,22 @@ export default function LoginForm() {
     },
   });
 
+  useEffect(() => {
+    if (statusCode === 401) {
+      const message = "Имя учетной записи или пароль не верны!";
+
+      form.setError("login", {
+        message: message,
+      });
+
+      form.setError("password", {
+        message: message,
+      });
+    }
+  }, [form, statusCode]);
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setStatusCode(null);
     await handleLogin(values);
   };
 
