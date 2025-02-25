@@ -16,7 +16,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (accessToken) {
-      void navigate(-1);
+      void navigate("/");
     }
   }, [accessToken, navigate]);
 
