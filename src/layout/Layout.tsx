@@ -8,7 +8,13 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
     .find((row) => row.startsWith("sidebar_state="))
     ?.split("=")[1];
 
-  const defaultOpen = sidebarState === "true";
+  let defaultOpen: boolean;
+
+  if (typeof sidebarState === "undefined") {
+    defaultOpen = true;
+  } else {
+    defaultOpen = sidebarState === "true";
+  }
 
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
