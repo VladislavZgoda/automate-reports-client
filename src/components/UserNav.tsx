@@ -1,4 +1,4 @@
-import { UserRoundCog, ChevronsUpDown } from "lucide-react";
+import { UserRoundCog, ChevronsUpDown, LogOut } from "lucide-react";
 
 import {
   SidebarMenu,
@@ -17,7 +17,7 @@ import useAuth from "../hooks/useAuth";
 import { useJwt } from "react-jwt";
 
 type JwtPayload = {
-  payload: {
+  payload?: {
     userName: string;
   };
 };
@@ -26,8 +26,8 @@ export default function UserNav() {
   const { accessToken } = useAuth();
   const { decodedToken } = useJwt(accessToken);
 
-  const jwtPayload = decodedToken as JwtPayload
-  const userName = jwtPayload.payload.userName
+  const jwtPayload = decodedToken as JwtPayload;
+  const userName = jwtPayload?.payload?.userName;
 
   return (
     <SidebarMenu>
@@ -40,11 +40,14 @@ export default function UserNav() {
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            side="top"
+            side="right"
             className="w-[--radix-popper-anchor-width]"
+            align="end"
+            sideOffset={4}
           >
             <DropdownMenuItem>
-              <span>Выйти из учётной записи</span>
+              <LogOut />
+              <span className="mb-0.5">Выйти из учётной записи</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
