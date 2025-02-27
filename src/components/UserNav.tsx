@@ -13,14 +13,29 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import useAuth from "../hooks/useAuth";
+import { useJwt } from "react-jwt";
+
+type JwtPayload = {
+  payload: {
+    userName: string;
+  };
+};
+
 export default function UserNav() {
+  const { accessToken } = useAuth();
+  const { decodedToken } = useJwt(accessToken);
+
+  const jwtPayload = decodedToken as JwtPayload
+  const userName = jwtPayload.payload.userName
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton>
-              <UserRoundCog /> Username
+              <UserRoundCog /> {userName}
               <ChevronsUpDown className="ml-auto" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
