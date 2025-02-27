@@ -1,5 +1,6 @@
-import { Home, Sheet, Table, UserRoundCog, ChevronsUpDown } from "lucide-react";
+import { Home, Sheet, Table } from "lucide-react";
 import { Link } from "react-router";
+import UserNav from "../../src/components/UserNav";
 
 import {
   Sidebar,
@@ -12,13 +13,6 @@ import {
   SidebarMenuItem,
   SidebarFooter,
 } from "@/components/ui/sidebar";
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 // Menu items.
 const items = [
@@ -62,26 +56,7 @@ export default function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuButton>
-                  <UserRoundCog /> Username
-                  <ChevronsUpDown className="ml-auto" />
-                </SidebarMenuButton>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                side="top"
-                className="w-[--radix-popper-anchor-width]"
-              >
-                <DropdownMenuItem>
-                  <span>Выйти из учётной записи</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </SidebarMenuItem>
-        </SidebarMenu>
+        <UserNav />
       </SidebarFooter>
     </Sidebar>
   );
