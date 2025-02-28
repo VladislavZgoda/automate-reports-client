@@ -23,7 +23,7 @@ type JwtPayload = {
 };
 
 export default function UserNav() {
-  const { accessToken } = useAuth();
+  const { accessToken, onLogout } = useAuth();
   const { decodedToken } = useJwt(accessToken);
 
   const jwtPayload = decodedToken as JwtPayload;
@@ -47,7 +47,9 @@ export default function UserNav() {
           >
             <DropdownMenuItem>
               <LogOut />
-              <span className="mb-0.5">Выйти из учётной записи</span>
+              <button type="button" className="mb-0.5" onClick={onLogout}>
+                Выйти из учётной записи
+              </button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

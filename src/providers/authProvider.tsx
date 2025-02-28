@@ -48,8 +48,21 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await fetch("api/logout", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        credentials: "same-origin",
+        method: "POST",
+      });
+    } catch (error) {
+      console.error(error);
+    }
+
     setAccessToken("");
+    await navigate("/login");
   };
 
   const value = {
