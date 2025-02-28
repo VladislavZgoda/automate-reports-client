@@ -10,10 +10,12 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
 import useAuth from "../hooks/useAuth";
+import ThemeToggle from "../components/themeToggle";
 import { useJwt } from "react-jwt";
 
 type JwtPayload = {
@@ -45,6 +47,10 @@ export default function UserNav() {
             align="end"
             sideOffset={4}
           >
+            <DropdownMenuItem>
+              <ThemeToggle />
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
             <DropdownMenuItem>
               <LogOut />
               <button type="button" className="mb-0.5" onClick={onLogout}>
