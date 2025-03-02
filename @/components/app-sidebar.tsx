@@ -1,5 +1,5 @@
 import { Home, Sheet, Table } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import UserNav from "../../src/components/UserNav";
 
 import {
@@ -34,6 +34,8 @@ const items = [
 ];
 
 export default function AppSidebar() {
+  const location = useLocation();
+
   return (
     <Sidebar variant="floating" collapsible="icon">
       <SidebarContent>
@@ -43,7 +45,10 @@ export default function AppSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton
+                    isActive={location.pathname === item.url}
+                    asChild
+                  >
                     <Link to={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
