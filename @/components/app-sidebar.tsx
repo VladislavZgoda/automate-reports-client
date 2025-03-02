@@ -23,12 +23,12 @@ const items = [
   },
   {
     title: "Экспорт Sims Client",
-    url: "#",
+    url: "/matritca-export",
     icon: Sheet,
   },
   {
     title: "ОДПУ",
-    url: "#",
+    url: "/odpy",
     icon: Table,
   },
 ];
