@@ -21,7 +21,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <SidebarProvider defaultOpen={defaultOpen}>
         <AppSidebar />
-        <main>
+        <main className="mt-1.5">
           <SidebarTrigger />
           {children ?? <Outlet />}
         </main>
