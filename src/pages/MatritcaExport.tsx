@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/select";
 
 const formSchema = z.object({
-  balanceGroup: z.enum(["БЫТ", "ЮР"], {
+  balanceGroup: z.enum(["private", "legal"], {
     message: "Балансная группа не выбранна.",
   }),
   file: z
@@ -63,8 +63,8 @@ export default function MatritcaExport() {
                     <SelectValue placeholder="Выбирете балансную группу" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="БЫТ">БЫТ</SelectItem>
-                    <SelectItem value="ЮР">Юридические лица</SelectItem>
+                    <SelectItem value="private">БЫТ</SelectItem>
+                    <SelectItem value="legal">Юридические лица</SelectItem>
                   </SelectContent>
                 </Select>
               </FormControl>
