@@ -58,8 +58,8 @@ export default function MatritcaExport() {
             <FormItem>
               <FormLabel>Балансная группа</FormLabel>
               <FormControl>
-                <Select {...field}>
-                  <SelectTrigger className="w-[300px]">
+                <Select onValueChange={field.onChange} {...field}>
+                  <SelectTrigger className="w-[280px]">
                     <SelectValue placeholder="Выбирете балансную группу" />
                   </SelectTrigger>
                   <SelectContent>
@@ -72,7 +72,7 @@ export default function MatritcaExport() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Сформировать</Button>
       </form>
     </Form>
   );
