@@ -32,7 +32,7 @@ const formSchema = z.object({
     .refine(
       (file) =>
         file.type ===
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
       {
         message: "Тип файла не xlsx.",
       },
@@ -56,15 +56,15 @@ export default function MatritcaExport() {
           name="balanceGroup"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Балансная группа</FormLabel>
+              <FormLabel className="text-base">Балансная группа</FormLabel>
               <FormControl>
                 <Select onValueChange={field.onChange} {...field}>
-                  <SelectTrigger className="w-[280px]">
+                  <SelectTrigger className="w-[350px]">
                     <SelectValue placeholder="Выбирете балансную группу" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="БЫТ">БЫТ</SelectItem>
-                    <SelectItem value="ЮР">ЮР</SelectItem>
+                    <SelectItem value="ЮР">Юридические лица</SelectItem>
                   </SelectContent>
                 </Select>
               </FormControl>
@@ -72,7 +72,27 @@ export default function MatritcaExport() {
             </FormItem>
           )}
         />
-        <Button type="submit">Сформировать</Button>
+        <FormField
+          control={form.control}
+          name="file"
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          render={({ field: { value, onChange, ...fieldProps } }) => (
+            <FormItem>
+              <FormLabel className="text-base">Экспорт из Sims</FormLabel>
+              <FormControl>
+                <Input
+                  {...fieldProps}
+                  placeholder="xlsx файл"
+                  type="file"
+                  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                  onChange={(event) => onChange(event.target.files?.[0])}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" size="lg">Сформировать</Button>
       </form>
     </Form>
   );
