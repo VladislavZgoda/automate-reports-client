@@ -31,7 +31,7 @@ import {
 
 const formSchema = z.object({
   balanceGroup: z.enum(["private", "legal"], {
-    message: "Балансная группа не выбранна.",
+    message: "Балансная группа не выбрана.",
   }),
   file: z
     .instanceof(File, {
@@ -86,7 +86,7 @@ export default function MatritcaExport() {
                         <FormControl>
                           <Select onValueChange={field.onChange} {...field}>
                             <SelectTrigger className="w-[300px]">
-                              <SelectValue placeholder="Выбирете балансную группу" />
+                              <SelectValue placeholder="Выберете балансную группу" />
                             </SelectTrigger>
                             <SelectContent>
                               <SelectItem value="private">БЫТ</SelectItem>
