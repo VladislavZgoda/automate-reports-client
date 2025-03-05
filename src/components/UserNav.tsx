@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import useAuth from "../hooks/useAuth";
-import ThemeToggle from "../components/themeToggle";
+import ThemeToggle from "./ThemeToggle";
 import { useJwt } from "react-jwt";
 
 type JwtPayload = {
