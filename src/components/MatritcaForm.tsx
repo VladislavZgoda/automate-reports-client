@@ -15,12 +15,13 @@ import {
 import { Input } from "@/components/ui/input";
 
 import {
-  Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import Select from "./SelectWithReset";
+import { useRef } from "react";
 
 const formSchema = z
   .object({
@@ -60,6 +61,7 @@ export default function MatritcaForm() {
   });
 
   const { accessToken } = useAuth();
+  const formRef = useRef<HTMLFormElement>(null);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const formData = new FormData();
@@ -92,6 +94,9 @@ export default function MatritcaForm() {
       link.click();
 
       URL.revokeObjectURL(fileUrl);
+
+      formRef.current?.reset();
+      form.reset();
     } catch (error) {
       console.error(error);
     }
@@ -99,7 +104,11 @@ export default function MatritcaForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8"
+        ref={formRef}
+      >
         <FormField
           control={form.control}
           name="balanceGroup"
@@ -109,7 +118,7 @@ export default function MatritcaForm() {
                 Балансная группа
               </FormLabel>
               <FormControl>
-                <Select onValueChange={field.onChange} {...field}>
+                <Select {...field} value={field.value}>
                   <SelectTrigger className="w-[300px]" id="balanceGroup">
                     <SelectValue placeholder="Выберете балансную группу" />
                   </SelectTrigger>
