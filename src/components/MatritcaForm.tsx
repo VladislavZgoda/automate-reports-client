@@ -70,10 +70,12 @@ export default function MatritcaForm() {
           name="balanceGroup"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-base">Балансная группа</FormLabel>
+              <FormLabel className="text-base" htmlFor="balanceGroup">
+                Балансная группа
+              </FormLabel>
               <FormControl>
                 <Select onValueChange={field.onChange} {...field}>
-                  <SelectTrigger className="w-[300px]">
+                  <SelectTrigger className="w-[300px]" id="balanceGroup">
                     <SelectValue placeholder="Выберете балансную группу" />
                   </SelectTrigger>
                   <SelectContent>
