@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import useAuth from "../hooks/useAuth";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -58,8 +59,42 @@ export default function MatritcaForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  const { accessToken } = useAuth();
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const formData = new FormData();
+
+    formData.append("balanceGroup", values.balanceGroup);
+    formData.append("upload", values.file);
+
+    if (values.controller) formData.append("controller", values.controller);
+
+    try {
+      const response = await fetch("api/matritca/", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      if (!response.ok) throw new Error(`Status code: ${response.status}`);
+
+      const blob = await response.blob();
+      const fileUrl = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+
+      const fileName =
+        values.balanceGroup === "private" ? "Быт.zip" : "Приложение №9 Юр.xlsx";
+
+      link.href = fileUrl;
+      link.download = fileName;
+      link.click();
+
+      URL.revokeObjectURL(fileUrl);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
