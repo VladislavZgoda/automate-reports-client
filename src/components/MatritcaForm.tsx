@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import useAuth from "../hooks/useAuth";
+import { Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -60,6 +61,7 @@ export default function MatritcaForm() {
     },
   });
 
+  const isSubmitting = form.formState.isSubmitting;
   const { accessToken } = useAuth();
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -170,8 +172,9 @@ export default function MatritcaForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" size="lg">
-          Сформировать
+        <Button type={isSubmitting ? "button" : "submit"} size="lg">
+          {isSubmitting && <Loader2 className="animate-spin" />}
+          {isSubmitting ? "Обработка" : "Сформировать"}
         </Button>
       </form>
     </Form>
