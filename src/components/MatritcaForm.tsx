@@ -82,7 +82,16 @@ export default function MatritcaForm() {
         },
       });
 
-      if (!response.ok) throw new Error(`Status code: ${response.status}`);
+      if (response.status === 422) {
+        form.setError("file", {
+          message:
+            "Заголовки таблицы xlsx не совпадают с заголовками экспорта по умолчанию из Sims.",
+        });
+      }
+
+      if (!response.ok) {
+        throw new Error(`${response.status} ${await response.json()}`);
+      }
 
       const blob = await response.blob();
       const fileUrl = URL.createObjectURL(blob);
