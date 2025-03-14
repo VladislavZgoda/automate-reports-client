@@ -2,6 +2,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
+
 import {
   Form,
   FormControl,
@@ -10,6 +12,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+
 import { Input } from "@/components/ui/input";
 import useAuth from "../hooks/useAuth";
 import { useEffect } from "react";
@@ -31,6 +34,8 @@ export default function LoginForm() {
       password: "",
     },
   });
+
+  const isSubmitting = form.formState.isSubmitting;
 
   useEffect(() => {
     if (statusCode === 401) {
@@ -65,6 +70,7 @@ export default function LoginForm() {
               <FormLabel className="text-base">Имя учетной записи</FormLabel>
               <FormControl>
                 <Input
+                  className="mt-0.5"
                   placeholder="Введите имя вашей учётной записи"
                   {...field}
                 />
@@ -81,6 +87,7 @@ export default function LoginForm() {
               <FormLabel className="text-base">Пароль</FormLabel>
               <FormControl>
                 <Input
+                  className="mt-0.5"
                   type="password"
                   autoComplete="on"
                   placeholder="Введите свой пароль"
@@ -91,8 +98,9 @@ export default function LoginForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" size="lg">
-          Войти
+        <Button type={isSubmitting ? "button" : "submit"} size="lg">
+          {isSubmitting && <Loader2 className="animate-spin" />}
+          {isSubmitting ? "Проверка" : "Войти"}
         </Button>
       </form>
     </Form>
