@@ -3,6 +3,11 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import useAuth from "../hooks/useAuth";
 import { Loader2 } from "lucide-react";
+import { useNavigate } from "react-router";
+import { isExpired } from "react-jwt";
+import refreshTokenRequest from "../api/refreshToken";
+import { useRef } from "react";
+import { AuthError } from "../utils/customErrors";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -22,7 +27,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Select from "./SelectWithReset";
-import { useRef } from "react";
 
 const formSchema = z
   .object({
@@ -62,8 +66,10 @@ export default function MatritcaForm() {
   });
 
   const isSubmitting = form.formState.isSubmitting;
-  const { accessToken } = useAuth();
+
+  const { accessToken, setAccessToken } = useAuth();
   const formRef = useRef<HTMLFormElement>(null);
+  const navigate = useNavigate();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const formData = new FormData();
@@ -73,14 +79,25 @@ export default function MatritcaForm() {
 
     if (values.controller) formData.append("controller", values.controller);
 
+    let token = accessToken;
+
     try {
+      if (isExpired(token)) {
+        token = await refreshTokenRequest();
+        setAccessToken(token);
+      }
+
       const response = await fetch("api/matritca/", {
         method: "POST",
         body: formData,
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${token}`,
         },
       });
+
+      if ([401, 403].includes(response.status)) {
+        throw new AuthError(`${response.status} ${await response.json()}`);
+      }
 
       if (response.status === 422) {
         form.setError("file", {
@@ -109,6 +126,12 @@ export default function MatritcaForm() {
       formRef.current?.reset();
       form.reset();
     } catch (error) {
+      if (error instanceof AuthError) {
+        setAccessToken("");
+
+        await navigate("/login");
+      }
+
       console.error(error);
     }
   }
