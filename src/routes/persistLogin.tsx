@@ -1,7 +1,7 @@
 import useAuth from "../hooks/useAuth";
 import { useCallback, useEffect, useState } from "react";
 import { Outlet } from "react-router";
-import type { LoginResponse } from "src/types";
+import refreshTokenRequest from "../api/refreshToken";
 
 export default function PersistLogin() {
   const [isLoading, setIsLoading] = useState(true);
@@ -9,18 +9,9 @@ export default function PersistLogin() {
 
   const handleRefreshToken = useCallback(async () => {
     try {
-      const response = await fetch("/api/refresh", {
-        credentials: "same-origin",
-        method: "GET",
-      });
+      const token = await refreshTokenRequest();
 
-      if (!response.ok) {
-        throw new Error(`${response.status} ${await response.json()}`);
-      }
-
-      const token = (await response.json()) as LoginResponse;
-
-      setAccessToken(token.accessToken);
+      setAccessToken(token);
     } catch (error) {
       console.error(error);
     } finally {
