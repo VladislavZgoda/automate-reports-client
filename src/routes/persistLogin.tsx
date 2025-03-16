@@ -3,10 +3,12 @@ import { useCallback, useEffect, useState } from "react";
 import { Outlet } from "react-router";
 import refreshTokenRequest from "../api/refreshToken";
 import { Loader2 } from "lucide-react";
+import useTheme from "../hooks/useTheme";
 
 export default function PersistLogin() {
   const [isLoading, setIsLoading] = useState(true);
   const { accessToken, setAccessToken } = useAuth();
+  const { theme } = useTheme();
 
   const handleRefreshToken = useCallback(async () => {
     try {
@@ -34,7 +36,7 @@ export default function PersistLogin() {
         <div className="flex justify-center items-center h-screen">
           <Loader2
             strokeWidth="3px"
-            color="#000000"
+            color={theme === "dark" ? "#ffffff" : "#000000"}
             className="animate-spin size-96"
           />
         </div>

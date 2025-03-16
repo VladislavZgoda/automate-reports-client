@@ -8,25 +8,31 @@ import PersistLogin from "./routes/persistLogin";
 import Home from "./pages/Home";
 import MatritcaExportPage from "./pages/MatritcaExportPage";
 import Odpy from "./pages/Odpy";
+import ThemeProvider from "./providers/themeProvider";
 
 function App() {
   return (
-    <AuthProvider>
-      <Routes>
-        <Route element={<PersistLogin />}>
-          <Route element={<ProtectedRoute />}>
-            <Route element={<Layout />}>
-              <Route path="/" element={<Home />} />
-              <Route path="/matritca-export" element={<MatritcaExportPage />} />
-              <Route path="/odpy" element={<Odpy />} />
+    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+      <AuthProvider>
+        <Routes>
+          <Route element={<PersistLogin />}>
+            <Route element={<ProtectedRoute />}>
+              <Route element={<Layout />}>
+                <Route path="/" element={<Home />} />
+                <Route
+                  path="/matritca-export"
+                  element={<MatritcaExportPage />}
+                />
+                <Route path="/odpy" element={<Odpy />} />
+              </Route>
             </Route>
+            <Route path="/login" element={<LoginPage />} />
           </Route>
-          <Route path="/login" element={<LoginPage />} />
-        </Route>
 
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </AuthProvider>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 
