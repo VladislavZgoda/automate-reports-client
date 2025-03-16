@@ -36,7 +36,7 @@ export default function UserNav() {
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <SidebarMenuButton>
+            <SidebarMenuButton className="cursor-pointer">
               <UserRoundCog /> {userName}
               <ChevronsUpDown className="ml-auto" />
             </SidebarMenuButton>
@@ -53,7 +53,11 @@ export default function UserNav() {
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <LogOut />
-              <button type="button" className="mb-0.5" onClick={onLogout}>
+              <button
+                type="button"
+                className="mb-0.5 cursor-pointer"
+                onClick={onLogout}
+              >
                 Выйти из учётной записи
               </button>
             </DropdownMenuItem>

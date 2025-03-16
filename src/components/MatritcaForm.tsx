@@ -153,7 +153,10 @@ export default function MatritcaForm() {
               </FormLabel>
               <FormControl>
                 <Select {...field} value={field.value}>
-                  <SelectTrigger className="w-[300px] mt-0.5" id="balanceGroup">
+                  <SelectTrigger
+                    className="w-[300px] mt-0.5 cursor-pointer"
+                    id="balanceGroup"
+                  >
                     <SelectValue placeholder="Выберете балансную группу" />
                   </SelectTrigger>
                   <SelectContent>
@@ -193,7 +196,7 @@ export default function MatritcaForm() {
               <FormControl>
                 <Input
                   {...fieldProps}
-                  className="w-[300px] mt-0.5"
+                  className="w-[300px] mt-0.5 cursor-pointer"
                   placeholder="xlsx файл"
                   type="file"
                   accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -204,7 +207,11 @@ export default function MatritcaForm() {
             </FormItem>
           )}
         />
-        <Button type={isSubmitting ? "button" : "submit"} size="lg">
+        <Button
+          type={isSubmitting ? "button" : "submit"}
+          size="lg"
+          className={isSubmitting ? "cursor-wait" : "cursor-pointer"}
+        >
           {isSubmitting && <Loader2 className="animate-spin" />}
           {isSubmitting ? "Обработка" : "Сформировать"}
         </Button>

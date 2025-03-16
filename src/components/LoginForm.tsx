@@ -101,7 +101,7 @@ export default function LoginForm() {
         <Button
           type={isSubmitting ? "button" : "submit"}
           size="lg"
-          className="cursor-pointer"
+          className={isSubmitting ? "cursor-wait" : "cursor-pointer"}
         >
           {isSubmitting && <Loader2 className="animate-spin" />}
           {isSubmitting ? "Проверка" : "Войти"}
