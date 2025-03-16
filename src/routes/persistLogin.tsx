@@ -2,6 +2,7 @@ import useAuth from "../hooks/useAuth";
 import { useCallback, useEffect, useState } from "react";
 import { Outlet } from "react-router";
 import refreshTokenRequest from "../api/refreshToken";
+import { Loader2 } from "lucide-react";
 
 export default function PersistLogin() {
   const [isLoading, setIsLoading] = useState(true);
@@ -27,5 +28,19 @@ export default function PersistLogin() {
     }
   }, [accessToken, handleRefreshToken]);
 
-  return <>{isLoading ? <p>Loading...</p> : <Outlet />}</>;
+  return (
+    <>
+      {isLoading ? (
+        <div className="flex justify-center items-center h-screen">
+          <Loader2
+            strokeWidth="3px"
+            color="#000000"
+            className="animate-spin size-96"
+          />
+        </div>
+      ) : (
+        <Outlet />
+      )}
+    </>
+  );
 }
