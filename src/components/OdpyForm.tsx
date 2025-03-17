@@ -60,7 +60,64 @@ export default function OdpyForm() {
   const navigate = useNavigate();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    const formData = new FormData();
+
+    formData.append("matritcaOdpy", values.simsFile);
+    formData.append("piramidaOdpy", values.piramidaFile);
+    formData.append("controller", values.controller);
+
+    let token = accessToken;
+
+    try {
+      if (isExpired(token)) {
+        token = await refreshTokenRequest();
+        setAccessToken(token);
+      }
+
+      const response = await fetch("api/odpy/", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if ([401, 403].includes(response.status)) {
+        throw new AuthError(`${response.status} ${await response.json()}`);
+      }
+
+      if (response.status === 422) {
+        form.setError("simsFile", {
+          message:
+            "Заголовки таблицы xlsx не совпадают с заголовками экспорта по умолчанию из Sims.",
+        });
+      }
+
+      if (!response.ok) {
+        throw new Error(`${response.status} ${await response.json()}`);
+      }
+
+      const blob = await response.blob();
+      const fileUrl = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+
+      link.href = fileUrl;
+      link.download = "ОДПУ.zip";
+      link.click();
+
+      URL.revokeObjectURL(fileUrl);
+
+      formRef.current?.reset();
+      form.reset();
+    } catch (error) {
+      if (error instanceof AuthError) {
+        setAccessToken("");
+
+        await navigate("/login");
+      }
+
+      console.error(error);
+    }
   }
 
   return (
