@@ -1,5 +1,5 @@
-import type { LoginResponse } from "src/types";
 import { AuthError } from "../utils/customErrors";
+import tokenSchema from "../validation/accessToken";
 
 export default async function refreshTokenRequest() {
   const response = await fetch("/api/refresh", {
@@ -15,7 +15,7 @@ export default async function refreshTokenRequest() {
     throw new Error(`${response.status} ${await response.json()}`);
   }
 
-  const token = (await response.json()) as LoginResponse;
+  const { accessToken } = tokenSchema.parse(await response.json());
 
-  return token.accessToken;
+  return accessToken;
 }
