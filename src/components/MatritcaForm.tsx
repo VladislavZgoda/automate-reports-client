@@ -2,14 +2,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import useAuth from "../hooks/useAuth";
-import { Loader2 } from "lucide-react";
 import { useNavigate } from "react-router";
 import { isExpired } from "react-jwt";
 import refreshTokenRequest from "../api/refreshToken";
 import { useRef } from "react";
 import { AuthError } from "../utils/customErrors";
 
-import { Button } from "@/components/ui/button";
+import FormButton from "./FormButton";
 import {
   Form,
   FormControl,
@@ -207,14 +206,8 @@ export default function MatritcaForm() {
             </FormItem>
           )}
         />
-        <Button
-          type={isSubmitting ? "button" : "submit"}
-          size="lg"
-          className={isSubmitting ? "cursor-wait" : "cursor-pointer"}
-        >
-          {isSubmitting && <Loader2 className="animate-spin" />}
-          {isSubmitting ? "Обработка" : "Сформировать"}
-        </Button>
+        
+        <FormButton isSubmitting={isSubmitting} />
       </form>
     </Form>
   );
