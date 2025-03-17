@@ -7,6 +7,7 @@ import { isExpired } from "react-jwt";
 import refreshTokenRequest from "../api/refreshToken";
 import { useRef } from "react";
 import { AuthError } from "../utils/customErrors";
+import downloadFile from "../utils/downloadFile";
 
 import FormButton from "./FormButton";
 import {
@@ -98,7 +99,7 @@ export default function OdpyForm() {
           form.setError("simsFile", {
             message: response422.message,
           });
-        } else if (response422.file === 'piramidaOdpy') {
+        } else if (response422.file === "piramidaOdpy") {
           form.setError("piramidaFile", {
             message: response422.message,
           });
@@ -112,14 +113,7 @@ export default function OdpyForm() {
       }
 
       const blob = await response.blob();
-      const fileUrl = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-
-      link.href = fileUrl;
-      link.download = "ОДПУ.zip";
-      link.click();
-
-      URL.revokeObjectURL(fileUrl);
+      downloadFile(blob, "ОДПУ.zip");
 
       formRef.current?.reset();
       form.reset();

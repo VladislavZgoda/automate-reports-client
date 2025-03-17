@@ -7,6 +7,7 @@ import { isExpired } from "react-jwt";
 import refreshTokenRequest from "../api/refreshToken";
 import { useRef } from "react";
 import { AuthError } from "../utils/customErrors";
+import downloadFile from "../utils/downloadFile";
 
 import FormButton from "./FormButton";
 import {
@@ -110,17 +111,11 @@ export default function MatritcaForm() {
       }
 
       const blob = await response.blob();
-      const fileUrl = URL.createObjectURL(blob);
-      const link = document.createElement("a");
 
       const fileName =
         values.balanceGroup === "private" ? "Быт.zip" : "Приложение №9 Юр.xlsx";
 
-      link.href = fileUrl;
-      link.download = fileName;
-      link.click();
-
-      URL.revokeObjectURL(fileUrl);
+      downloadFile(blob, fileName);
 
       formRef.current?.reset();
       form.reset();
