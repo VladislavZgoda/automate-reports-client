@@ -45,6 +45,11 @@ const formSchema = z.object({
   }),
 });
 
+const response422Schema = z.object({
+  file: z.enum(["matritcaOdpy", "piramidaOdpy"]),
+  message: z.string().min(1),
+});
+
 export default function OdpyForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -87,10 +92,19 @@ export default function OdpyForm() {
       }
 
       if (response.status === 422) {
-        form.setError("simsFile", {
-          message:
-            "Заголовки таблицы xlsx не совпадают с заголовками экспорта по умолчанию из Sims.",
-        });
+        const response422 = response422Schema.parse(await response.json());
+
+        if (response422.file === "matritcaOdpy") {
+          form.setError("simsFile", {
+            message: response422.message,
+          });
+        } else if (response422.file === 'piramidaOdpy') {
+          form.setError("piramidaFile", {
+            message: response422.message,
+          });
+        }
+
+        throw new Error(`422 ${response422.message}`);
       }
 
       if (!response.ok) {
