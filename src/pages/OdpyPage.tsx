@@ -6,6 +6,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+import OdpyForm from "../components/OdpyForm";
+
 export default function Odpy() {
   return (
     <div className="flex w-full items-center justify-center p-6 md:p-10">
@@ -20,7 +22,9 @@ export default function Odpy() {
               Пирамида2 с диапазоном в 4 суток.
             </CardDescription>
           </CardHeader>
-          <CardContent></CardContent>
+          <CardContent>
+            <OdpyForm />
+          </CardContent>
         </Card>
       </div>
     </div>
