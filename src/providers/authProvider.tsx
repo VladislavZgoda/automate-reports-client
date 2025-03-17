@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router";
 import AuthContext from "../context/authContext";
-import type { LoginFormValues, LoginResponse } from "src/types";
+import type { LoginFormValues } from "src/types";
+import { z } from "zod";
 
 type AuthProviderProps = {
   children: React.ReactNode;
@@ -10,6 +11,10 @@ type AuthProviderProps = {
 type LocationState = {
   from?: { pathname: string | undefined };
 };
+
+const tokenSchema = z.object({
+  accessToken: z.string().min(1),
+});
 
 export default function AuthProvider({ children }: AuthProviderProps) {
   const [accessToken, setAccessToken] = useState("");
@@ -37,9 +42,8 @@ export default function AuthProvider({ children }: AuthProviderProps) {
         throw new Error(`${response.status} ${await response.json()}`);
       }
 
-      const token = (await response.json()) as LoginResponse;
-
-      setAccessToken(token.accessToken);
+      const { accessToken } = tokenSchema.parse(await response.json());
+      setAccessToken(accessToken);
 
       const origin = state?.from?.pathname ?? "/";
       await navigate(origin);
