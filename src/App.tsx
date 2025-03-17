@@ -7,7 +7,7 @@ import Layout from "./layout/Layout";
 import PersistLogin from "./routes/persistLogin";
 import Home from "./pages/Home";
 import MatritcaExportPage from "./pages/MatritcaExportPage";
-import Odpy from "./pages/Odpy";
+import Odpy from "./pages/OdpyPage";
 import ThemeProvider from "./providers/themeProvider";
 
 function App() {
