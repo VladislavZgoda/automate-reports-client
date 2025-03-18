@@ -19,7 +19,7 @@ export default function Odpy() {
             </CardTitle>
             <CardDescription>
               Добавьте экспорт из Sims в xlsx формате, отчёт по показаниям из
-              Пирамида2 с диапазоном в 4 суток.
+              Пирамида 2 с диапазоном в 4 суток.
             </CardDescription>
           </CardHeader>
           <CardContent>

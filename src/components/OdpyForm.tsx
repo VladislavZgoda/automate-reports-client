@@ -163,7 +163,7 @@ export default function OdpyForm() {
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           render={({ field: { value, onChange, ...fieldProps } }) => (
             <FormItem>
-              <FormLabel className="text-base">Экспорт из Пирамида2</FormLabel>
+              <FormLabel className="text-base">Экспорт из Пирамида 2</FormLabel>
               <FormControl>
                 <Input
                   {...fieldProps}
