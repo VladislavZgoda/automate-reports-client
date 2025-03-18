@@ -20,7 +20,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
     <SidebarProvider defaultOpen={defaultOpen}>
       <AppSidebar />
       <main className="mt-1.5">
-        <SidebarTrigger />
+        <SidebarTrigger className="ml-[-2px]" />
         {children ?? <Outlet />}
       </main>
     </SidebarProvider>
