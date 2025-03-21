@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
+import { useEffect, useState } from "react";
 
 // https://github.com/shadcn-ui/ui/issues/549
 

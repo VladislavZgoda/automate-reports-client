@@ -1,8 +1,8 @@
-import useAuth from "../hooks/useAuth";
+import { Loader2 } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { Outlet } from "react-router";
 import refreshTokenRequest from "../api/refreshToken";
-import { Loader2 } from "lucide-react";
+import useAuth from "../hooks/useAuth";
 import useTheme from "../hooks/useTheme";
 
 export default function PersistLogin() {

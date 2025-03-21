@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router";
-import AuthContext from "../context/authContext";
+import { useLocation, useNavigate } from "react-router";
 import type { LoginFormValues } from "src/types";
+import AuthContext from "../context/authContext";
 import tokenSchema from "../validation/accessToken";
 
 type AuthProviderProps = {

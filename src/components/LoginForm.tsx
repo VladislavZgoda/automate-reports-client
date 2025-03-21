@@ -1,8 +1,8 @@
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import {
   Form,
@@ -14,8 +14,8 @@ import {
 } from "@/components/ui/form";
 
 import { Input } from "@/components/ui/input";
-import useAuth from "../hooks/useAuth";
 import { useEffect } from "react";
+import useAuth from "../hooks/useAuth";
 
 const formSchema = z.object({
   login: z.string().nonempty({ message: "Отсутствует имя учетной записи." }),

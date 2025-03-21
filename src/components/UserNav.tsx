@@ -1,4 +1,4 @@
-import { UserRoundCog, ChevronsUpDown, LogOut } from "lucide-react";
+import { ChevronsUpDown, LogOut, UserRoundCog } from "lucide-react";
 
 import {
   SidebarMenu,
@@ -14,9 +14,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import { useJwt } from "react-jwt";
 import useAuth from "../hooks/useAuth";
 import ThemeToggle from "./ThemeToggle";
-import { useJwt } from "react-jwt";
 
 type JwtPayload = {
   payload?: {

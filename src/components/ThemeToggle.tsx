@@ -1,13 +1,13 @@
+import { SidebarMenuButton } from "@/components/ui/sidebar";
 import { Moon, Sun } from "lucide-react";
 import useTheme from "../hooks/useTheme";
-import { SidebarMenuButton } from "@/components/ui/sidebar";
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger,
   DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
 export default function ThemeToggle() {

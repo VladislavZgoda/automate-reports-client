@@ -1,14 +1,14 @@
-import { Routes, Route } from "react-router";
-import LoginPage from "./pages/LoginPage";
-import AuthProvider from "./providers/authProvider";
-import ProtectedRoute from "./routes/protectedRoute";
-import NotFound from "./pages/404";
+import { Route, Routes } from "react-router";
 import Layout from "./layout/Layout";
-import PersistLogin from "./routes/persistLogin";
+import NotFound from "./pages/404";
 import Home from "./pages/Home";
+import LoginPage from "./pages/LoginPage";
 import MatritcaExportPage from "./pages/MatritcaExportPage";
 import Odpy from "./pages/OdpyPage";
+import AuthProvider from "./providers/authProvider";
 import ThemeProvider from "./providers/themeProvider";
+import PersistLogin from "./routes/persistLogin";
+import ProtectedRoute from "./routes/protectedRoute";
 
 function App() {
   return (
