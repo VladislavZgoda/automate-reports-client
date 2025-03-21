@@ -4,13 +4,13 @@ import type { LoginFormValues } from "src/types";
 import AuthContext from "../context/authContext";
 import tokenSchema from "../validation/accessToken";
 
-type AuthProviderProps = {
+interface AuthProviderProps {
   children: React.ReactNode;
-};
+}
 
-type LocationState = {
+interface LocationState {
   from?: { pathname: string | undefined };
-};
+}
 
 export default function AuthProvider({ children }: AuthProviderProps) {
   const [accessToken, setAccessToken] = useState("");

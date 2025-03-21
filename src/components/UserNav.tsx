@@ -18,11 +18,11 @@ import { useJwt } from "react-jwt";
 import useAuth from "../hooks/useAuth";
 import ThemeToggle from "./ThemeToggle";
 
-type JwtPayload = {
+interface JwtPayload {
   payload?: {
     userName: string;
   };
-};
+}
 
 export default function UserNav() {
   const { accessToken, onLogout } = useAuth();

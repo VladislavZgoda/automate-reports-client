@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 
-type IsSubmitting = {
+interface IsSubmitting {
   isSubmitting: boolean;
-};
+}
 
 export default function FormButton({ isSubmitting }: IsSubmitting) {
   return (
