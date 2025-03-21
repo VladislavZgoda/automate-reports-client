@@ -145,7 +145,7 @@ export default function OdpyForm() {
               <FormControl>
                 <Input
                   {...fieldProps}
-                  className="w-[300px] mt-0.5 cursor-pointer"
+                  className="mt-0.5 w-[300px] cursor-pointer"
                   placeholder="xlsx файл"
                   type="file"
                   accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -167,7 +167,7 @@ export default function OdpyForm() {
               <FormControl>
                 <Input
                   {...fieldProps}
-                  className="w-[300px] mt-0.5 cursor-pointer"
+                  className="mt-0.5 w-[300px] cursor-pointer"
                   placeholder="xlsx файл"
                   type="file"
                   accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -187,7 +187,7 @@ export default function OdpyForm() {
               <FormLabel className="text-base">Контроллер</FormLabel>
               <FormControl>
                 <Input
-                  className="w-[300px] mt-0.5"
+                  className="mt-0.5 w-[300px]"
                   placeholder="Введите ФИО контроллера"
                   {...field}
                 />

@@ -33,11 +33,11 @@ export default function PersistLogin() {
   return (
     <>
       {isLoading ? (
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex h-screen items-center justify-center">
           <Loader2
             strokeWidth="3px"
             color={theme === "dark" ? "#ffffff" : "#000000"}
-            className="animate-spin size-96"
+            className="size-96 animate-spin"
           />
         </div>
       ) : (

@@ -148,7 +148,7 @@ export default function MatritcaForm() {
               <FormControl>
                 <Select {...field} value={field.value}>
                   <SelectTrigger
-                    className="w-[300px] mt-0.5 cursor-pointer"
+                    className="mt-0.5 w-[300px] cursor-pointer"
                     id="balanceGroup"
                   >
                     <SelectValue placeholder="Выберете балансную группу" />
@@ -171,7 +171,7 @@ export default function MatritcaForm() {
               <FormLabel className="text-base">Контроллер</FormLabel>
               <FormControl>
                 <Input
-                  className="w-[300px] mt-0.5"
+                  className="mt-0.5 w-[300px]"
                   placeholder="Введите ФИО контроллера"
                   {...field}
                 />
@@ -190,7 +190,7 @@ export default function MatritcaForm() {
               <FormControl>
                 <Input
                   {...fieldProps}
-                  className="w-[300px] mt-0.5 cursor-pointer"
+                  className="mt-0.5 w-[300px] cursor-pointer"
                   placeholder="xlsx файл"
                   type="file"
                   accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
