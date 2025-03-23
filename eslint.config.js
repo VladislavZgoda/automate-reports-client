@@ -1,4 +1,5 @@
 import js from "@eslint/js";
+import vitest from "@vitest/eslint-plugin";
 import eslintConfigPrettier from "eslint-config-prettier";
 import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
@@ -15,7 +16,7 @@ export default tseslint.config(
       ...tseslint.configs.stylisticTypeChecked,
       eslintConfigPrettier,
     ],
-    files: ["**/*.{ts,tsx}"],
+    files: ["**/*.{ts,tsx,.test.tsx,.test.ts}"],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
@@ -29,6 +30,7 @@ export default tseslint.config(
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
       react,
+      vitest,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
@@ -46,6 +48,7 @@ export default tseslint.config(
           },
         },
       ],
+      ...vitest.configs.recommended.rules,
     },
   },
 );
