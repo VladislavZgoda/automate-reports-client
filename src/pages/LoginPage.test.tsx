@@ -24,7 +24,7 @@ describe("LoginPage", () => {
     expect(screen.getByText("Пароль")).toBeTruthy();
   });
 
-  it("show errors when input is empty", async () => {
+  it("shows errors when form input fields are empty", async () => {
     render(
       <BrowserRouter>
         <LoginPage />
