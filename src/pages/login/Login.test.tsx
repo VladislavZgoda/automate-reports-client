@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router";
 
-import LoginPage from "./LoginPage";
+import LoginPage from "./Login";
 
 const flushPromises = () => new Promise((resolve) => setTimeout(resolve, 0));
 

@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router";
 import Layout from "./layout/Layout";
 import NotFound from "./pages/404";
 import Home from "./pages/Home";
-import LoginPage from "./pages/LoginPage";
+import LoginPage from "./pages/login/Login";
 import MatritcaExportPage from "./pages/MatritcaExportPage";
 import Odpy from "./pages/OdpyPage";
 import AuthProvider from "./providers/authProvider";

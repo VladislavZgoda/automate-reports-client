@@ -7,8 +7,8 @@ import {
 } from "@/components/ui/card";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
-import LoginForm from "../components/LoginForm";
-import useAuth from "../hooks/useAuth";
+import LoginForm from "../../components/LoginForm";
+import useAuth from "../../hooks/useAuth";
 
 export default function LoginPage() {
   const { accessToken } = useAuth();
