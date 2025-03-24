@@ -25,7 +25,6 @@ describe("App => Home", () => {
   afterAll(() => serverResponse200.close());
 
   it("renders Home component when the user is logged in", async () => {
-    
     await act(async () => {
       render(
         <BrowserRouter>
