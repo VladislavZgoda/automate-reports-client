@@ -15,7 +15,10 @@ export default async function refreshTokenRequest() {
     throw new Error(`${response.status} ${await response.json()}`);
   }
 
-  const { accessToken } = tokenSchema.parse(await response.json());
+  const accessToken = tokenSchema.safeParse(await response.json());
 
-  return accessToken;
+  if (!accessToken.success)
+    throw new Error("Response does not contain access token.");
+
+  return accessToken.data.accessToken;
 }
