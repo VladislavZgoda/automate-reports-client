@@ -1,11 +1,9 @@
-import { act, render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 import { BrowserRouter } from "react-router";
 
 import App from "./App";
-
-const flushPromises = () => new Promise((resolve) => setTimeout(resolve, 0));
 
 const serverResponse200 = setupServer(
   http.get("/api/refresh", () => {
@@ -25,16 +23,11 @@ describe("App => Home", () => {
   afterAll(() => serverResponse200.close());
 
   it("renders Home component when the user is logged in", async () => {
-    await act(async () => {
-      render(
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>,
-      );
-      await flushPromises();
-    });
+    render(<App />, { wrapper: BrowserRouter });
 
-    expect(screen.getByText("Обработка отчётов")).toBeTruthy();
+    await waitFor(() => {
+      expect(screen.getByText("Обработка отчётов")).toBeTruthy();
+    });
   });
 });
 
@@ -44,15 +37,10 @@ describe("App => Login", () => {
   afterAll(() => serverResponse401.close());
 
   it("renders Login component when the user is not logged in", async () => {
-    await act(async () => {
-      render(
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>,
-      );
-      await flushPromises();
-    });
+    render(<App />, { wrapper: BrowserRouter });
 
-    expect(screen.getByText("Войти")).toBeTruthy();
+    await waitFor(() => {
+      expect(screen.getByText("Войти")).toBeTruthy();
+    });
   });
 });
