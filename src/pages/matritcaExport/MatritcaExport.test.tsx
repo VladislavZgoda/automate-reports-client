@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { BrowserRouter } from "react-router";
 import { vi } from "vitest";
 
-import MatritcaExportPage from "./MatritcaExportPage";
+import MatritcaExportPage from "./MatritcaExport";
 
 function createMockPointerEvent(
   type: string,

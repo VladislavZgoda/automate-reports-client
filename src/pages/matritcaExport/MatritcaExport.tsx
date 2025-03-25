@@ -6,7 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import MatritcaForm from "../components/MatritcaForm";
+import MatritcaForm from "../../components/MatritcaForm";
 
 export default function MatritcaExportPage() {
   return (
