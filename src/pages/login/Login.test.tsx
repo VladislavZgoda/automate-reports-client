@@ -1,17 +1,12 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { BrowserRouter } from "react-router";
 
 import LoginPage from "./Login";
 
-const flushPromises = () => new Promise((resolve) => setTimeout(resolve, 0));
-
 describe("LoginPage", () => {
   it("renders Login component", () => {
-    render(
-      <BrowserRouter>
-        <LoginPage />
-      </BrowserRouter>,
-    );
+    render(<LoginPage />, { wrapper: BrowserRouter });
 
     expect(screen.getByText("Обработка XLSX файлов")).toBeTruthy();
     expect(screen.getByText("Войти")).toBeTruthy();
@@ -25,15 +20,13 @@ describe("LoginPage", () => {
   });
 
   it("shows errors when form input fields are empty", async () => {
-    render(
-      <BrowserRouter>
-        <LoginPage />
-      </BrowserRouter>,
-    );
+    const user = userEvent.setup();
 
-    fireEvent.click(screen.getByRole("button"));
+    render(<LoginPage />, { wrapper: BrowserRouter });
 
-    await flushPromises();
+    const submitButton = screen.getByRole("button");
+
+    await user.click(submitButton);
 
     expect(
       screen.getByText("Отсутствует пароль от учетной записи."),
