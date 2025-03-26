@@ -8,15 +8,15 @@ describe("LoginPage", () => {
   it("renders Login component", () => {
     render(<LoginPage />, { wrapper: BrowserRouter });
 
-    expect(screen.getByText("Обработка XLSX файлов")).toBeTruthy();
-    expect(screen.getByText("Войти")).toBeTruthy();
+    expect(screen.getByText("Обработка XLSX файлов")).toBeInTheDocument();
+    expect(screen.getByText("Войти")).toBeInTheDocument();
 
     expect(
       screen.getByText("Введите имя учетной записи и пароль для входа."),
-    ).toBeTruthy();
+    ).toBeInTheDocument();
 
-    expect(screen.getByText("Имя учетной записи")).toBeTruthy();
-    expect(screen.getByText("Пароль")).toBeTruthy();
+    expect(screen.getByText("Имя учетной записи")).toBeInTheDocument();
+    expect(screen.getByText("Пароль")).toBeInTheDocument();
   });
 
   it("shows errors when form input fields are empty", async () => {
@@ -30,10 +30,10 @@ describe("LoginPage", () => {
 
     expect(
       screen.getByText("Отсутствует пароль от учетной записи."),
-    ).toBeTruthy();
+    ).toBeInTheDocument();
 
     expect(
       screen.getByText("Отсутствует пароль от учетной записи."),
-    ).toBeTruthy();
+    ).toBeInTheDocument();
   });
 });

@@ -26,7 +26,7 @@ describe("App => Home", () => {
     render(<App />, { wrapper: BrowserRouter });
 
     await waitFor(() => {
-      expect(screen.getByText("Обработка отчётов")).toBeTruthy();
+      expect(screen.getByText("Обработка отчётов")).toBeInTheDocument();
     });
   });
 });
@@ -40,7 +40,7 @@ describe("App => Login", () => {
     render(<App />, { wrapper: BrowserRouter });
 
     await waitFor(() => {
-      expect(screen.getByText("Войти")).toBeTruthy();
+      expect(screen.getByText("Войти")).toBeInTheDocument();
     });
   });
 });

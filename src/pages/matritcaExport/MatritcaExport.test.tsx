@@ -45,18 +45,20 @@ describe("MatritcaExportPage", () => {
   it("renders MatritcaExportPage component", () => {
     render(<MatritcaExportPage />, { wrapper: BrowserRouter });
 
-    expect(screen.getByText("Обработка экспорта из Sims client")).toBeTruthy();
+    expect(
+      screen.getByText("Обработка экспорта из Sims client"),
+    ).toBeInTheDocument();
 
     expect(
       screen.getByText(
         "Введите балансную группу и добавьте файл в xlsx формате.",
       ),
-    ).toBeTruthy();
+    ).toBeInTheDocument();
 
-    expect(screen.getByText("Балансная группа")).toBeTruthy();
-    expect(screen.getByText("Контроллер")).toBeTruthy();
-    expect(screen.getByText("Экспорт из Sims")).toBeTruthy();
-    expect(screen.getByRole("button")).toBeTruthy();
+    expect(screen.getByText("Балансная группа")).toBeInTheDocument();
+    expect(screen.getByText("Контроллер")).toBeInTheDocument();
+    expect(screen.getByText("Экспорт из Sims")).toBeInTheDocument();
+    expect(screen.getByRole("button")).toBeInTheDocument();
   });
 
   it("shows errors when form input fields are empty", async () => {
@@ -66,8 +68,11 @@ describe("MatritcaExportPage", () => {
     fireEvent.click(submitButton);
 
     await waitFor(() => {
-      expect(screen.getByText("Балансная группа не выбрана.")).toBeTruthy();
-      expect(screen.getByText("Отсутствует xlsx файл.")).toBeTruthy();
+      expect(
+        screen.getByText("Балансная группа не выбрана."),
+      ).toBeInTheDocument();
+
+      expect(screen.getByText("Отсутствует xlsx файл.")).toBeInTheDocument();
     });
   });
 
@@ -96,7 +101,7 @@ describe("MatritcaExportPage", () => {
     await waitFor(() => {
       expect(
         screen.getByText("Добавьте контроллера, когда выбран Быт."),
-      ).toBeTruthy();
+      ).toBeInTheDocument();
     });
   });
 
