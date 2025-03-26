@@ -6,7 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import OdpyForm from "../components/OdpyForm";
+import OdpyForm from "../../components/OdpyForm";
 
 export default function Odpy() {
   return (

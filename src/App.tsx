@@ -4,7 +4,7 @@ import NotFound from "./pages/404";
 import Home from "./pages/Home";
 import LoginPage from "./pages/login/Login";
 import MatritcaExportPage from "./pages/matritcaExport/MatritcaExport";
-import Odpy from "./pages/OdpyPage";
+import Odpy from "./pages/odpy/Odpy";
 import AuthProvider from "./providers/authProvider";
 import ThemeProvider from "./providers/themeProvider";
 import PersistLogin from "./routes/persistLogin";

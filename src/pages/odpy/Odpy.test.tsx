@@ -2,7 +2,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { BrowserRouter } from "react-router";
 
-import Odpy from "./OdpyPage";
+import Odpy from "./Odpy";
 
 describe("Odpy", () => {
   it("renders Odpy component", () => {
