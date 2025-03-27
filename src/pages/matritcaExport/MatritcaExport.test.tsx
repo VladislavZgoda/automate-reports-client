@@ -58,7 +58,10 @@ describe("MatritcaExportPage", () => {
     expect(screen.getByText("Балансная группа")).toBeInTheDocument();
     expect(screen.getByText("Контроллер")).toBeInTheDocument();
     expect(screen.getByText("Экспорт из Sims")).toBeInTheDocument();
-    expect(screen.getByRole("button")).toBeInTheDocument();
+
+    expect(
+      screen.getByRole("button", { name: "Сформировать" }),
+    ).toBeInTheDocument();
   });
 
   it("shows errors when form input fields are empty", async () => {
@@ -95,7 +98,7 @@ describe("MatritcaExportPage", () => {
 
     await user.upload(fileInput, xlsxFile);
 
-    const submitButton = screen.getByRole("button");
+    const submitButton = screen.getByRole("button", { name: "Сформировать" });
     fireEvent.click(submitButton);
 
     await waitFor(() => {
@@ -118,7 +121,7 @@ describe("MatritcaExportPage", () => {
       target: { files: { item: () => xlsFile, length: 1, 0: xlsFile } },
     });
 
-    const submitButton = screen.getByRole("button");
+    const submitButton = screen.getByRole("button", { name: "Сформировать" });
     fireEvent.click(submitButton);
 
     await waitFor(() => {
@@ -145,7 +148,7 @@ describe("MatritcaExportPage", () => {
 
     await user.upload(fileInput, xlsxFile);
 
-    const submitButton = screen.getByRole("button");
+    const submitButton = screen.getByRole("button", { name: "Сформировать" });
     fireEvent.click(submitButton);
 
     await waitFor(() => {

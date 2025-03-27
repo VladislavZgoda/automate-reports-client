@@ -17,6 +17,7 @@ describe("LoginPage", () => {
 
     expect(screen.getByText("Имя учетной записи")).toBeInTheDocument();
     expect(screen.getByText("Пароль")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Войти" })).toBeInTheDocument();
   });
 
   it("shows errors when form input fields are empty", async () => {
@@ -24,7 +25,7 @@ describe("LoginPage", () => {
 
     render(<LoginPage />, { wrapper: BrowserRouter });
 
-    const submitButton = screen.getByRole("button");
+    const submitButton = screen.getByRole("button", { name: "Войти" });
 
     await user.click(submitButton);
 

@@ -21,7 +21,9 @@ describe("Odpy", () => {
     expect(screen.getByText("Экспорт из Sims")).toBeInTheDocument();
     expect(screen.getByText("Экспорт из Пирамида 2")).toBeInTheDocument();
     expect(screen.getByText("Контроллер")).toBeInTheDocument();
-    expect(screen.getByRole("button")).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Сформировать" }),
+    ).toBeInTheDocument();
   });
 
   it("shows errors when form input fields are empty", async () => {
@@ -29,7 +31,7 @@ describe("Odpy", () => {
 
     render(<Odpy />, { wrapper: BrowserRouter });
 
-    const submitButton = screen.getByRole("button");
+    const submitButton = screen.getByRole("button", { name: "Сформировать" });
     await user.click(submitButton);
 
     expect(
@@ -65,7 +67,7 @@ describe("Odpy", () => {
       target: { files: { item: () => csvFile, length: 1, 0: csvFile } },
     });
 
-    const submitButton = screen.getByRole("button");
+    const submitButton = screen.getByRole("button", { name: "Сформировать" });
     fireEvent.click(submitButton);
 
     await waitFor(() => {
