@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router";
 import Layout from "./layout/Layout";
 import NotFound from "./pages/404";
 import Home from "./pages/Home";
+import LegalEntities from "./pages/legalEntities/LegalEntities";
 import LoginPage from "./pages/login/Login";
 import MatritcaExportPage from "./pages/matritcaExport/MatritcaExport";
 import Odpy from "./pages/odpy/Odpy";
@@ -24,6 +25,7 @@ function App() {
                   element={<MatritcaExportPage />}
                 />
                 <Route path="/odpy" element={<Odpy />} />
+                <Route path="/legal-entities" element={<LegalEntities />} />
               </Route>
             </Route>
             <Route path="/login" element={<LoginPage />} />

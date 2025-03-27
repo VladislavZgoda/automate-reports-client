@@ -1,4 +1,4 @@
-import { Home, Sheet, Table } from "lucide-react";
+import { Home, Rows3, Sheet, Table } from "lucide-react";
 import { Link, useLocation } from "react-router";
 import UserNav from "../../src/components/UserNav";
 
@@ -30,6 +30,11 @@ const items = [
     title: "ОДПУ",
     url: "/odpy",
     icon: Table,
+  },
+  {
+    title: "Юридические лица П2",
+    url: "/legal-entities",
+    icon: Rows3,
   },
 ];
 
