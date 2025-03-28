@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 
 import LoginButton from "./LoginButton";
 
-describe("FormButton component", () => {
+describe("LoginButton component", () => {
   it("renders the default state of the button if isSubmitting is false", () => {
     render(<LoginButton isSubmitting={false} />);
 
