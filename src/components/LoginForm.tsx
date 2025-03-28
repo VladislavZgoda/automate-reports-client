@@ -1,8 +1,7 @@
-import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import LoginButton from "./loginButton/LoginButton";
 
 import {
   Form,
@@ -79,6 +78,7 @@ export default function LoginForm() {
             </FormItem>
           )}
         />
+        
         <FormField
           control={form.control}
           name="password"
@@ -98,14 +98,8 @@ export default function LoginForm() {
             </FormItem>
           )}
         />
-        <Button
-          type={isSubmitting ? "button" : "submit"}
-          size="lg"
-          className={isSubmitting ? "cursor-wait" : "cursor-pointer"}
-        >
-          {isSubmitting && <Loader2 className="animate-spin" />}
-          {isSubmitting ? "Проверка" : "Войти"}
-        </Button>
+
+        <LoginButton isSubmitting={isSubmitting} />
       </form>
     </Form>
   );

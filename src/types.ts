@@ -4,3 +4,7 @@ export interface LoginFormValues {
 }
 
 export type Theme = "dark" | "light" | "system";
+
+export interface IsSubmitting {
+  isSubmitting: boolean;
+}
