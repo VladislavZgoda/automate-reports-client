@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 import { BrowserRouter } from "react-router";
@@ -11,7 +11,7 @@ const server = setupServer(
   }),
 );
 
-describe("App => Home", () => {
+describe("App", () => {
   beforeAll(() => server.listen());
   afterEach(() => server.resetHandlers());
   afterAll(() => server.close());
@@ -19,9 +19,9 @@ describe("App => Home", () => {
   it("renders Home component when the user is logged in", async () => {
     render(<App />, { wrapper: BrowserRouter });
 
-    await waitFor(() => {
-      expect(screen.getByText("Обработка отчётов")).toBeInTheDocument();
-    });
+    const h1HomePage = await screen.findByText(/Разделы меню/);
+
+    expect(h1HomePage).toBeInTheDocument();
   });
 
   it("renders Login component when the user is not logged in", async () => {
@@ -33,8 +33,8 @@ describe("App => Home", () => {
 
     render(<App />, { wrapper: BrowserRouter });
 
-    await waitFor(() => {
-      expect(screen.getByText("Войти")).toBeInTheDocument();
-    });
+    const h1LoginPage = await screen.findByText(/Обработка XLSX файлов/);
+
+    expect(h1LoginPage).toBeInTheDocument();
   });
 });
