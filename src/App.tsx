@@ -4,7 +4,7 @@ import NotFound from "./pages/404";
 import Home from "./pages/Home";
 import LegalEntities from "./pages/legalEntities/LegalEntities";
 import LoginPage from "./pages/login/Login";
-import MatritcaExportPage from "./pages/matritcaExport/MatritcaExport";
+import MatritcaExport from "./pages/matritcaExport/MatritcaExport";
 import Odpy from "./pages/odpy/Odpy";
 import AuthProvider from "./providers/authProvider";
 import ThemeProvider from "./providers/themeProvider";
@@ -22,7 +22,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route
                   path="/matritca-export"
-                  element={<MatritcaExportPage />}
+                  element={<MatritcaExport />}
                 />
                 <Route path="/odpy" element={<Odpy />} />
                 <Route path="/legal-entities" element={<LegalEntities />} />

@@ -15,7 +15,7 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
-import MatritcaExportPage from "./MatritcaExport";
+import MatritcaExport from "./MatritcaExport";
 
 function createMockPointerEvent(
   type: string,
@@ -45,9 +45,9 @@ const mockXlsxFile = new File(["test"], "test.xlsx", {
   type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 });
 
-describe("MatritcaExportPage", () => {
-  it("renders MatritcaExportPage component", () => {
-    render(<MatritcaExportPage />, { wrapper: BrowserRouter });
+describe("MatritcaExport", () => {
+  it("renders MatritcaExport component", () => {
+    render(<MatritcaExport />, { wrapper: BrowserRouter });
 
     expect(
       screen.getByText("Обработка экспорта из Sims client"),
@@ -69,7 +69,7 @@ describe("MatritcaExportPage", () => {
   });
 
   it("shows errors when form input fields are empty", async () => {
-    render(<MatritcaExportPage />, { wrapper: BrowserRouter });
+    render(<MatritcaExport />, { wrapper: BrowserRouter });
 
     const submitButton = screen.getByRole("button");
     fireEvent.click(submitButton);
@@ -88,7 +88,7 @@ describe("MatritcaExportPage", () => {
   it("shows error when the controller field is empty and the balance group is private", async () => {
     const user = userEvent.setup();
 
-    render(<MatritcaExportPage />, { wrapper: BrowserRouter });
+    render(<MatritcaExport />, { wrapper: BrowserRouter });
 
     const selectButtonElement = screen.getByRole("combobox");
     await user.click(selectButtonElement);
@@ -110,7 +110,7 @@ describe("MatritcaExportPage", () => {
   });
 
   it("shows an error if the file type is not xlsx", async () => {
-    render(<MatritcaExportPage />, { wrapper: BrowserRouter });
+    render(<MatritcaExport />, { wrapper: BrowserRouter });
 
     const fileInput = screen.getByLabelText("Экспорт из Sims");
 
@@ -133,7 +133,7 @@ describe("MatritcaExportPage", () => {
   it("does not show error for the controller field when the balance group is legal", async () => {
     const user = userEvent.setup();
 
-    render(<MatritcaExportPage />, { wrapper: BrowserRouter });
+    render(<MatritcaExport />, { wrapper: BrowserRouter });
 
     const selectButtonElement = screen.getByRole("combobox");
     await user.click(selectButtonElement);
