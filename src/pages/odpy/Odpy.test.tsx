@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { BrowserRouter } from "react-router";
 
@@ -21,6 +21,7 @@ describe("Odpy", () => {
     expect(screen.getByText("Экспорт из Sims")).toBeInTheDocument();
     expect(screen.getByText("Экспорт из Пирамида 2")).toBeInTheDocument();
     expect(screen.getByText("Контроллер")).toBeInTheDocument();
+
     expect(
       screen.getByRole("button", { name: "Сформировать" }),
     ).toBeInTheDocument();
@@ -34,15 +35,21 @@ describe("Odpy", () => {
     const submitButton = screen.getByRole("button", { name: "Сформировать" });
     await user.click(submitButton);
 
-    expect(
-      screen.getByText("Отсутствует файл экспорта из Sims."),
-    ).toBeInTheDocument();
+    const simsFileInputFieldError = screen.getByText(
+      "Отсутствует файл экспорта из Sims.",
+    );
 
-    expect(
-      screen.getByText("Отсутствует файл экспорта из Пирамида 2."),
-    ).toBeInTheDocument();
+    expect(simsFileInputFieldError).toBeInTheDocument();
 
-    expect(screen.getByText("Пустое поле.")).toBeInTheDocument();
+    const piramidaFileInputFieldError = screen.getByText(
+      "Отсутствует файл экспорта из Пирамида 2.",
+    );
+
+    expect(piramidaFileInputFieldError).toBeInTheDocument();
+
+    const controllerInputFieldError = screen.getByText("Пустое поле.");
+
+    expect(controllerInputFieldError).toBeInTheDocument();
   });
 
   it("shows errors if the file type is not xlsx", async () => {
@@ -70,8 +77,9 @@ describe("Odpy", () => {
     const submitButton = screen.getByRole("button", { name: "Сформировать" });
     fireEvent.click(submitButton);
 
-    await waitFor(() => {
-      expect(screen.getAllByText("Тип файла не xlsx.")).toHaveLength(2);
-    });
+    const invalidFileTypeErrors =
+      await screen.findAllByText("Тип файла не xlsx.");
+
+    expect(invalidFileTypeErrors).toHaveLength(2);
   });
 });
