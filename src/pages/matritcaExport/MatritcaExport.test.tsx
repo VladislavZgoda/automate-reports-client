@@ -41,6 +41,10 @@ Object.assign(window.HTMLElement.prototype, {
   hasPointerCapture: vi.fn(),
 });
 
+const mockXlsxFile = new File(["test"], "test.xlsx", {
+  type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+});
+
 describe("MatritcaExportPage", () => {
   it("renders MatritcaExportPage component", () => {
     render(<MatritcaExportPage />, { wrapper: BrowserRouter });
@@ -70,13 +74,15 @@ describe("MatritcaExportPage", () => {
     const submitButton = screen.getByRole("button");
     fireEvent.click(submitButton);
 
-    await waitFor(() => {
-      expect(
-        screen.getByText("Балансная группа не выбрана."),
-      ).toBeInTheDocument();
+    const balanceGroupError = await screen.findByText(
+      "Балансная группа не выбрана.",
+    );
 
-      expect(screen.getByText("Отсутствует xlsx файл.")).toBeInTheDocument();
-    });
+    expect(balanceGroupError).toBeInTheDocument();
+
+    const fileInputError = await screen.findByText("Отсутствует xlsx файл.");
+
+    expect(fileInputError).toBeInTheDocument();
   });
 
   it("shows error when the controller field is empty and the balance group is private", async () => {
@@ -91,21 +97,16 @@ describe("MatritcaExportPage", () => {
     await user.click(selectOption[1]);
 
     const fileInput = screen.getByLabelText("Экспорт из Sims");
-
-    const xlsxFile = new File(["test"], "test.xlsx", {
-      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    });
-
-    await user.upload(fileInput, xlsxFile);
+    await user.upload(fileInput, mockXlsxFile);
 
     const submitButton = screen.getByRole("button", { name: "Сформировать" });
     fireEvent.click(submitButton);
 
-    await waitFor(() => {
-      expect(
-        screen.getByText("Добавьте контроллера, когда выбран Быт."),
-      ).toBeInTheDocument();
-    });
+    const controllerFieldError = await screen.findByText(
+      "Добавьте контроллера, когда выбран Быт.",
+    );
+
+    expect(controllerFieldError).toBeInTheDocument();
   });
 
   it("shows an error if the file type is not xlsx", async () => {
@@ -113,20 +114,20 @@ describe("MatritcaExportPage", () => {
 
     const fileInput = screen.getByLabelText("Экспорт из Sims");
 
-    const xlsFile = new File(["test"], "test.xls", {
+    const mockXlsFile = new File(["test"], "test.xls", {
       type: "application/vnd.ms-excel",
     });
 
     fireEvent.change(fileInput, {
-      target: { files: { item: () => xlsFile, length: 1, 0: xlsFile } },
+      target: { files: { item: () => mockXlsFile, length: 1, 0: mockXlsFile } },
     });
 
     const submitButton = screen.getByRole("button", { name: "Сформировать" });
     fireEvent.click(submitButton);
 
-    await waitFor(() => {
-      expect(screen.getByText("Тип файла не xlsx.")).toBeInTheDocument();
-    });
+    const invalidFileTypeError = await screen.findByText("Тип файла не xlsx.");
+
+    expect(invalidFileTypeError).toBeInTheDocument();
   });
 
   it("does not show error for the controller field when the balance group is legal", async () => {
@@ -141,12 +142,7 @@ describe("MatritcaExportPage", () => {
     await user.click(selectOption[1]);
 
     const fileInput = screen.getByLabelText("Экспорт из Sims");
-
-    const xlsxFile = new File(["test"], "test.xlsx", {
-      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    });
-
-    await user.upload(fileInput, xlsxFile);
+    await user.upload(fileInput, mockXlsxFile);
 
     const submitButton = screen.getByRole("button", { name: "Сформировать" });
     fireEvent.click(submitButton);
