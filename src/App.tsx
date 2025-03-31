@@ -20,10 +20,7 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route element={<Layout />}>
                 <Route path="/" element={<Home />} />
-                <Route
-                  path="/matritca-export"
-                  element={<MatritcaExport />}
-                />
+                <Route path="/matritca-export" element={<MatritcaExport />} />
                 <Route path="/odpy" element={<Odpy />} />
                 <Route path="/legal-entities" element={<LegalEntities />} />
               </Route>

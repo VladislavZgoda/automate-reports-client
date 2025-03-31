@@ -8,16 +8,26 @@ describe("LoginPage", () => {
   it("renders Login component", () => {
     render(<LoginPage />, { wrapper: BrowserRouter });
 
-    expect(screen.getByText("Обработка XLSX файлов")).toBeInTheDocument();
-    expect(screen.getByText("Войти")).toBeInTheDocument();
+    const h1 = screen.getByText("Обработка XLSX файлов");
+    expect(h1).toBeInTheDocument();
 
-    expect(
-      screen.getByText("Введите имя учетной записи и пароль для входа."),
-    ).toBeInTheDocument();
+    const cardTitle = screen.getByText("Войти");
+    expect(cardTitle).toBeInTheDocument();
 
-    expect(screen.getByText("Имя учетной записи")).toBeInTheDocument();
-    expect(screen.getByText("Пароль")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Войти" })).toBeInTheDocument();
+    const cardDescription = screen.getByText(
+      "Введите имя учетной записи и пароль для входа.",
+    );
+
+    expect(cardDescription).toBeInTheDocument();
+
+    const loginInputFieldLabel = screen.getByText("Имя учетной записи");
+    expect(loginInputFieldLabel).toBeInTheDocument();
+
+    const passwordInputFieldLabel = screen.getByText("Пароль");
+    expect(passwordInputFieldLabel).toBeInTheDocument();
+
+    const submitButton = screen.getByRole("button", { name: "Войти" });
+    expect(submitButton).toBeInTheDocument();
   });
 
   it("shows errors when form input fields are empty", async () => {
@@ -29,12 +39,16 @@ describe("LoginPage", () => {
 
     await user.click(submitButton);
 
-    expect(
-      screen.getByText("Отсутствует пароль от учетной записи."),
-    ).toBeInTheDocument();
+    const loginInputFieldError = screen.getByText(
+      "Отсутствует имя учетной записи.",
+    );
 
-    expect(
-      screen.getByText("Отсутствует пароль от учетной записи."),
-    ).toBeInTheDocument();
+    expect(loginInputFieldError).toBeInTheDocument();
+
+    const passwordInputFieldError = screen.getByText(
+      "Отсутствует пароль от учетной записи.",
+    );
+
+    expect(passwordInputFieldError).toBeInTheDocument();
   });
 });
