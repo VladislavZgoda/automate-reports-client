@@ -6,6 +6,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+import LegalEntitiesForm from "../../components/legalEntitiesForm";
+
 export default function LegalEntities() {
   return (
     <div className="flex w-full items-center justify-center p-6 md:p-10">
@@ -21,7 +23,9 @@ export default function LegalEntities() {
               Тимашевск&#34;.
             </CardDescription>
           </CardHeader>
-          <CardContent></CardContent>
+          <CardContent>
+            <LegalEntitiesForm />
+          </CardContent>
         </Card>
       </div>
     </div>
