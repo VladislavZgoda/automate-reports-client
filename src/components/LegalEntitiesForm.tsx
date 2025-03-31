@@ -16,7 +16,7 @@ import FormButton from "./formButton/FormButton";
 const formSchema = z.object({
   piramidaFile: z
     .instanceof(File, {
-      message: "Отсутствует файл экспорта из Sims.",
+      message: "Отсутствует файл экспорта из Пирамида 2.",
     })
     .refine(
       (file) =>
