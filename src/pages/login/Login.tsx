@@ -8,10 +8,10 @@ import {
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import LoginForm from "../../components/LoginForm";
-import useAuth from "../../hooks/useAuth";
+import useAuthStore from "../../hooks/useAuthStore";
 
 export default function LoginPage() {
-  const { accessToken } = useAuth();
+  const accessToken = useAuthStore((state) => state.accessToken);
   const navigate = useNavigate();
 
   useEffect(() => {

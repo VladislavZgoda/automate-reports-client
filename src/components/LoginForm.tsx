@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useLocation, useNavigate } from "react-router";
 import { z } from "zod";
 import LoginButton from "./loginButton/LoginButton";
 
@@ -13,18 +14,27 @@ import {
 } from "@/components/ui/form";
 
 import { Input } from "@/components/ui/input";
-import { useEffect } from "react";
-import useAuth from "../hooks/useAuth";
+// import { useEffect } from "react";
+// import useAuth from "../hooks/useAuth";
+import loginRequest from "../api/login";
+import useAuthStore from "../hooks/useAuthStore";
+
+interface LocationState {
+  from?: { pathname: string | undefined };
+}
 
 const formSchema = z.object({
-  login: z.string().nonempty({ message: "Отсутствует имя учетной записи." }),
+  login: z.string().min(1, { message: "Отсутствует имя учетной записи." }),
   password: z
     .string()
-    .nonempty({ message: "Отсутствует пароль от учетной записи." }),
+    .min(1, { message: "Отсутствует пароль от учетной записи." }),
 });
 
 export default function LoginForm() {
-  const { handleLogin, statusCode, setStatusCode } = useAuth();
+  //const { handleLogin, statusCode, setStatusCode } = useAuth();
+  const setAccessToken = useAuthStore((state) => state.setAccessToken);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -34,25 +44,35 @@ export default function LoginForm() {
     },
   });
 
+  const state = location.state as LocationState;
   const isSubmitting = form.formState.isSubmitting;
 
-  useEffect(() => {
-    if (statusCode === 401) {
-      const message = "Имя учетной записи или пароль не верны!";
+  // useEffect(() => {
+  //   if (statusCode === 401) {
+  //     const message = "Имя учетной записи или пароль не верны!";
 
-      form.setError("login", {
-        message: message,
-      });
+  //     form.setError("login", {
+  //       message: message,
+  //     });
 
-      form.setError("password", {
-        message: message,
-      });
-    }
-  }, [form, statusCode]);
+  //     form.setError("password", {
+  //       message: message,
+  //     });
+  //   }
+  // }, [form, statusCode]);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    setStatusCode(null);
-    await handleLogin(values);
+    //setStatusCode(null);
+    //await handleLogin(values);
+    try {
+      const accessToken = await loginRequest(values);
+      setAccessToken(accessToken);
+
+      const origin = state?.from?.pathname ?? "/";
+      await navigate(origin);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

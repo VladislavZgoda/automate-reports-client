@@ -2,12 +2,14 @@ import { Loader2 } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { Outlet } from "react-router";
 import refreshTokenRequest from "../api/refreshToken";
-import useAuth from "../hooks/useAuth";
+import useAuthStore from "../hooks/useAuthStore";
 import useTheme from "../hooks/useTheme";
 
 export default function PersistLogin() {
   const [isLoading, setIsLoading] = useState(true);
-  const { accessToken, setAccessToken } = useAuth();
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const setAccessToken = useAuthStore((state) => state.setAccessToken);
+
   const { theme } = useTheme();
 
   const handleRefreshToken = useCallback(async () => {
