@@ -6,7 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import LegalEntitiesForm from "../../components/legalEntitiesForm";
+import LegalEntitiesForm from "../../components/LegalEntitiesForm";
 
 export default function LegalEntities() {
   return (
