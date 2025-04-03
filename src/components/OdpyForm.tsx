@@ -5,7 +5,7 @@ import { isExpired } from "react-jwt";
 import { useNavigate } from "react-router";
 import { z } from "zod";
 import refreshTokenRequest from "../api/refreshToken";
-import useAuth from "../hooks/useAuth";
+import useAuthStore from "../hooks/useAuthStore";
 import { AuthError } from "../utils/customErrors";
 import downloadFile from "../utils/downloadFile";
 
@@ -61,7 +61,10 @@ export default function OdpyForm() {
 
   const isSubmitting = form.formState.isSubmitting;
 
-  const { accessToken, setAccessToken } = useAuth();
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const setAccessToken = useAuthStore((state) => state.setAccessToken);
+  const resetToken = useAuthStore((state) => state.reset);
+
   const formRef = useRef<HTMLFormElement>(null);
   const navigate = useNavigate();
 
@@ -119,7 +122,7 @@ export default function OdpyForm() {
       form.reset();
     } catch (error) {
       if (error instanceof AuthError) {
-        setAccessToken("");
+        resetToken();
 
         await navigate("/login");
       }
