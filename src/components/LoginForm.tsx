@@ -14,10 +14,9 @@ import {
 } from "@/components/ui/form";
 
 import { Input } from "@/components/ui/input";
-// import { useEffect } from "react";
-// import useAuth from "../hooks/useAuth";
 import loginRequest from "../api/login";
 import useAuthStore from "../hooks/useAuthStore";
+import { AuthError } from "../utils/customErrors";
 
 interface LocationState {
   from?: { pathname: string | undefined };
@@ -31,7 +30,6 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
-  //const { handleLogin, statusCode, setStatusCode } = useAuth();
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
   const navigate = useNavigate();
   const location = useLocation();
@@ -47,23 +45,7 @@ export default function LoginForm() {
   const state = location.state as LocationState;
   const isSubmitting = form.formState.isSubmitting;
 
-  // useEffect(() => {
-  //   if (statusCode === 401) {
-  //     const message = "Имя учетной записи или пароль не верны!";
-
-  //     form.setError("login", {
-  //       message: message,
-  //     });
-
-  //     form.setError("password", {
-  //       message: message,
-  //     });
-  //   }
-  // }, [form, statusCode]);
-
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    //setStatusCode(null);
-    //await handleLogin(values);
     try {
       const accessToken = await loginRequest(values);
       setAccessToken(accessToken);
@@ -71,7 +53,19 @@ export default function LoginForm() {
       const origin = state?.from?.pathname ?? "/";
       await navigate(origin);
     } catch (error) {
-      console.log(error);
+      if (error instanceof AuthError) {
+        const message = "Имя учетной записи или пароль не верны!";
+
+        form.setError("login", {
+          message: message,
+        });
+
+        form.setError("password", {
+          message: message,
+        });
+      } else {
+        console.log(error);
+      }
     }
   };
 
