@@ -2,7 +2,7 @@ import AppSidebar from "@/components/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Outlet } from "react-router";
 
-export default function Layout({ children }: { children?: React.ReactNode }) {
+export default function Layout() {
   const sidebarState = document.cookie
     .split("; ")
     .find((row) => row.startsWith("sidebar_state="))
@@ -21,7 +21,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
       <AppSidebar />
       <main className="mt-1.5">
         <SidebarTrigger className="ml-[-2px]" />
-        {children ?? <Outlet />}
+        <Outlet />
       </main>
     </SidebarProvider>
   );
