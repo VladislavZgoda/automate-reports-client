@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router";
 import { z } from "zod";
 import LoginButton from "./loginButton/LoginButton";
+import { useEffect } from "react";
 
 import {
   Form,
@@ -30,6 +31,7 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
+  const accessToken = useAuthStore((state) => state.accessToken);
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
   const navigate = useNavigate();
   const location = useLocation();
@@ -43,14 +45,21 @@ export default function LoginForm() {
   });
 
   const state = location.state as LocationState;
+  const origin = state?.from?.pathname ?? "/";
+
   const isSubmitting = form.formState.isSubmitting;
+
+  useEffect(() => {
+    if (accessToken) {
+      void navigate(origin);
+    }
+  }, [accessToken, navigate, origin]);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const accessToken = await loginRequest(values);
       setAccessToken(accessToken);
 
-      const origin = state?.from?.pathname ?? "/";
       await navigate(origin);
     } catch (error) {
       if (error instanceof AuthError) {

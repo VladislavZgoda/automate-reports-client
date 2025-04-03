@@ -5,21 +5,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useEffect } from "react";
-import { useNavigate } from "react-router";
 import LoginForm from "../../components/LoginForm";
-import useAuthStore from "../../hooks/useAuthStore";
 
 export default function LoginPage() {
-  const accessToken = useAuthStore((state) => state.accessToken);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (accessToken) {
-      void navigate("/");
-    }
-  }, [accessToken, navigate]);
-
   return (
     <div className="flex min-h-svh w-full flex-col items-center justify-center p-6 md:p-10">
       <h1 className="mb-3 text-2xl font-bold">Обработка XLSX файлов</h1>
