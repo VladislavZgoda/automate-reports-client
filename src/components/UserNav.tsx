@@ -15,7 +15,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { useJwt } from "react-jwt";
-import useAuth from "../hooks/useAuth";
+import { useNavigate } from "react-router";
+import logoutRequest from "../api/logout";
+import useAuthStore from "../hooks/useAuthStore";
 import ThemeToggle from "./ThemeToggle";
 
 interface JwtPayload {
@@ -25,8 +27,23 @@ interface JwtPayload {
 }
 
 export default function UserNav() {
-  const { accessToken, onLogout } = useAuth();
+  const navigate = useNavigate();
+
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const resetToken = useAuthStore((state) => state.reset);
+
   const { decodedToken } = useJwt(accessToken);
+
+  const onLogout = async () => {
+    try {
+      await logoutRequest(accessToken);
+    } catch (error) {
+      console.log(error);
+    }
+
+    resetToken();
+    await navigate("/login");
+  };
 
   const jwtPayload = decodedToken as JwtPayload;
   const userName = jwtPayload?.payload?.userName;
