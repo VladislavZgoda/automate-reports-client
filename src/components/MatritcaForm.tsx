@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { isExpired } from "react-jwt";
 import { useNavigate } from "react-router";
 import { z } from "zod";
-import refreshTokenRequest from "../api/refreshToken";
+import refreshTokenRequest from "../api/refersh/refreshToken";
 import useAuthStore from "../hooks/useAuthStore";
 import { AuthError } from "../utils/customErrors";
 import downloadFile from "../utils/downloadFile";

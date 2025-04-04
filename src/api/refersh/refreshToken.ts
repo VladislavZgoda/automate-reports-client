@@ -1,5 +1,5 @@
-import { AuthError } from "../utils/customErrors";
-import tokenSchema from "../validation/accessToken";
+import { AuthError } from "../../utils/customErrors";
+import tokenSchema from "../../validation/accessToken";
 
 export default async function refreshTokenRequest() {
   const response = await fetch("/api/refresh", {
