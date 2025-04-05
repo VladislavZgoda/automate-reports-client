@@ -4,9 +4,10 @@ import { useForm } from "react-hook-form";
 import { isExpired } from "react-jwt";
 import { useNavigate } from "react-router";
 import { z } from "zod";
+import matritcaRequest from "../api/matritca/matritcaRequest";
 import refreshTokenRequest from "../api/refersh/refreshToken";
 import useAuthStore from "../hooks/useAuthStore";
-import { AuthError } from "../utils/customErrors";
+import { AuthError, UnprocessableEntityError } from "../utils/customErrors";
 import downloadFile from "../utils/downloadFile";
 
 import {
@@ -90,30 +91,7 @@ export default function MatritcaForm() {
         setAccessToken(token);
       }
 
-      const response = await fetch("api/matritca/", {
-        method: "POST",
-        body: formData,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if ([401, 403].includes(response.status)) {
-        throw new AuthError(`${response.status} ${await response.json()}`);
-      }
-
-      if (response.status === 422) {
-        form.setError("file", {
-          message:
-            "Заголовки таблицы xlsx не совпадают с заголовками экспорта по умолчанию из Sims.",
-        });
-      }
-
-      if (!response.ok) {
-        throw new Error(`${response.status} ${await response.json()}`);
-      }
-
-      const blob = await response.blob();
+      const blob = await matritcaRequest(token, formData);
 
       const fileName =
         values.balanceGroup === "private" ? "Быт.zip" : "Приложение №9 Юр.xlsx";
@@ -127,9 +105,14 @@ export default function MatritcaForm() {
         resetToken();
 
         await navigate("/login");
+      } else if (error instanceof UnprocessableEntityError) {
+        form.setError("file", {
+          message:
+            "Заголовки таблицы xlsx не совпадают с заголовками экспорта по умолчанию из Sims.",
+        });
+      } else {
+        console.error(error);
       }
-
-      console.error(error);
     }
   }
 
