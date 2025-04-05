@@ -11,11 +11,10 @@ const server = setupServer(
   }),
 );
 
- beforeAll(() => server.listen());
- afterEach(() => server.resetHandlers());
- afterAll(() => server.close());
-
 describe("App", () => {
+  beforeAll(() => server.listen());
+  afterAll(() => server.close());
+
   it("renders Login component when the user is not logged in", async () => {
     render(<App />, { wrapper: BrowserRouter });
 

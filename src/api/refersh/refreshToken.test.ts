@@ -26,7 +26,6 @@ const server = setupServer(
 
 describe("refreshTokenRequest errors", () => {
   beforeAll(() => server.listen());
-  afterEach(() => server.resetHandlers());
   afterAll(() => server.close());
 
   it("throws AuthError if the response status is 401", async () => {
