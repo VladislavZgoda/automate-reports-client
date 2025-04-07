@@ -1,14 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
-import { isExpired } from "react-jwt";
 import { useNavigate } from "react-router";
 import { z } from "zod";
 import matritcaRequest from "../api/matritca/matritcaRequest";
-import refreshTokenRequest from "../api/refersh/refreshToken";
 import useAuthStore from "../hooks/useAuthStore";
 import { AuthError, UnprocessableEntityError } from "../utils/customErrors";
 import downloadFile from "../utils/downloadFile";
+import refreshToken from "../utils/refreshToken";
 
 import {
   Form,
@@ -83,14 +82,8 @@ export default function MatritcaForm() {
 
     if (values.controller) formData.append("controller", values.controller);
 
-    let token = accessToken;
-
     try {
-      if (isExpired(token)) {
-        token = await refreshTokenRequest();
-        setAccessToken(token);
-      }
-
+      const token = await refreshToken(accessToken, setAccessToken);
       const blob = await matritcaRequest(token, formData);
 
       const fileName =
