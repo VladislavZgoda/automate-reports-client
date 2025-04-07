@@ -14,7 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { useJwt } from "react-jwt";
+import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router";
 import logoutRequest from "../api/logout";
 import useAuthStore from "../hooks/useAuthStore";
@@ -32,7 +32,7 @@ export default function UserNav() {
   const accessToken = useAuthStore((state) => state.accessToken);
   const resetToken = useAuthStore((state) => state.reset);
 
-  const { decodedToken } = useJwt(accessToken);
+  const decodedToken = jwtDecode<JwtPayload>(accessToken);
 
   const onLogout = async () => {
     try {
@@ -45,16 +45,13 @@ export default function UserNav() {
     await navigate("/login");
   };
 
-  const jwtPayload = decodedToken as JwtPayload;
-  const userName = jwtPayload?.payload?.userName;
-
   return (
     <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton className="cursor-pointer">
-              <UserRoundCog /> {userName}
+              <UserRoundCog /> {decodedToken.payload?.userName}
               <ChevronsUpDown className="ml-auto" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
