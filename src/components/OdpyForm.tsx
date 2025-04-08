@@ -1,13 +1,17 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
-import { isExpired } from "react-jwt";
 import { useNavigate } from "react-router";
 import { z } from "zod";
-import refreshTokenRequest from "../api/refersh/refreshToken";
+import odpyRequest from "../api/odpy/odpyRequest";
 import useAuthStore from "../hooks/useAuthStore";
-import { AuthError } from "../utils/customErrors";
+import {
+  AuthError,
+  UnprocessablePiramidaFileError,
+  UnprocessableSimsFileError,
+} from "../utils/customErrors";
 import downloadFile from "../utils/downloadFile";
+import refreshToken from "../utils/refreshToken";
 
 import {
   Form,
@@ -46,11 +50,6 @@ const formSchema = z.object({
   }),
 });
 
-const response422Schema = z.object({
-  file: z.enum(["matritcaOdpy", "piramidaOdpy"]),
-  message: z.string().min(1),
-});
-
 export default function OdpyForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -75,47 +74,10 @@ export default function OdpyForm() {
     formData.append("piramidaOdpy", values.piramidaFile);
     formData.append("controller", values.controller);
 
-    let token = accessToken;
-
     try {
-      if (isExpired(token)) {
-        token = await refreshTokenRequest();
-        setAccessToken(token);
-      }
+      const token = await refreshToken(accessToken, setAccessToken);
+      const blob = await odpyRequest(token, formData);
 
-      const response = await fetch("api/odpy/", {
-        method: "POST",
-        body: formData,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if ([401, 403].includes(response.status)) {
-        throw new AuthError(`${response.status} ${await response.json()}`);
-      }
-
-      if (response.status === 422) {
-        const response422 = response422Schema.parse(await response.json());
-
-        if (response422.file === "matritcaOdpy") {
-          form.setError("simsFile", {
-            message: response422.message,
-          });
-        } else if (response422.file === "piramidaOdpy") {
-          form.setError("piramidaFile", {
-            message: response422.message,
-          });
-        }
-
-        throw new Error(`422 ${response422.message}`);
-      }
-
-      if (!response.ok) {
-        throw new Error(`${response.status} ${await response.json()}`);
-      }
-
-      const blob = await response.blob();
       downloadFile(blob, "ОДПУ.zip");
 
       formRef.current?.reset();
@@ -125,9 +87,19 @@ export default function OdpyForm() {
         resetToken();
 
         await navigate("/login");
+      } else if (error instanceof UnprocessableSimsFileError) {
+        form.setError("simsFile", {
+          message:
+            "Заголовки таблицы xlsx не совпадают с заголовками экспорта по умолчанию из Sims.",
+        });
+      } else if (error instanceof UnprocessablePiramidaFileError) {
+        form.setError("piramidaFile", {
+          message: `Заголовки таблицы xlsx не совпадают с заголовками отчёта по
+          показаниям из Пирамида 2 с диапазоном в 4 суток.`,
+        });
+      } else {
+        console.error(error);
       }
-
-      console.error(error);
     }
   }
 
