@@ -4,31 +4,31 @@ import { AuthError } from "../../utils/customErrors";
 
 import refreshTokenRequest from "./refreshToken";
 
-describe("refreshTokenRequest", () => {
-  beforeEach(() => {
-    fetchMock.resetMocks();
-  });
+const server = setupServer();
 
+beforeAll(() => server.listen());
+afterAll(() => server.close());
+
+describe("refreshTokenRequest", () => {
   it("returns accessToken", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify({ accessToken: "12345" }));
+    server.use(
+      http.get("/api/refresh", () => {
+        return HttpResponse.json({ accessToken: "test" }, { status: 200 });
+      }),
+    );
 
     const accessToken = await refreshTokenRequest();
 
-    expect(accessToken).toEqual("12345");
+    expect(accessToken).toEqual("test");
   });
-});
-
-const server = setupServer(
-  http.get("/api/refresh", () => {
-    return HttpResponse.json("You are not authenticated.", { status: 401 });
-  }),
-);
-
-describe("refreshTokenRequest errors", () => {
-  beforeAll(() => server.listen());
-  afterAll(() => server.close());
 
   it("throws AuthError if the response status is 401", async () => {
+    server.use(
+      http.get("/api/refresh", () => {
+        return HttpResponse.json("You are not authenticated.", { status: 401 });
+      }),
+    );
+
     try {
       await refreshTokenRequest();
     } catch (error) {
