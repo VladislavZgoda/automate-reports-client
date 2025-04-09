@@ -1,19 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { http, HttpResponse } from "msw";
-import { setupServer } from "msw/node";
 import { BrowserRouter } from "react-router";
 import { vi } from "vitest";
-
-const server = setupServer(
-  http.get("/api/refresh", () => {
-    return HttpResponse.json({ accessToken: "token" }, { status: 200 });
-  }),
-);
-
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
 
 import MatritcaExport from "./MatritcaExport";
 
@@ -44,6 +32,9 @@ Object.assign(window.HTMLElement.prototype, {
 const mockXlsxFile = new File(["test"], "test.xlsx", {
   type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 });
+
+vi.mock("../../utils/refreshToken");
+vi.mock("../../utils/downloadFile");
 
 describe("MatritcaExport", () => {
   it("renders MatritcaExport component", () => {
