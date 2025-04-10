@@ -1,4 +1,4 @@
-import { AuthError } from "../utils/customErrors";
+import { AuthError } from "../../../utils/customErrors";
 
 export default async function logoutRequest(accessToken: string) {
   const response = await fetch("api/logout", {

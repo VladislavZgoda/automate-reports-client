@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/form";
 
 import { Input } from "@/components/ui/input";
-import loginRequest from "../api/login";
+import loginRequest from "../api/auth/login/loginRequest";
 import useAuthStore from "../hooks/useAuthStore";
 import { AuthError } from "../utils/customErrors";
 

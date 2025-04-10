@@ -16,7 +16,7 @@ import {
 
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router";
-import logoutRequest from "../api/logout";
+import logoutRequest from "../api/auth/logout/logoutRequest";
 import useAuthStore from "../hooks/useAuthStore";
 import ThemeToggle from "./ThemeToggle";
 
