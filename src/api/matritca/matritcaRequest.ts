@@ -17,9 +17,7 @@ export default async function matritcaRequest(
   }
 
   if (response.status === 422) {
-    throw new UnprocessableEntityError(
-      `422 ${await response.json()}`,
-    );
+    throw new UnprocessableEntityError(`422 ${await response.json()}`);
   }
 
   if (!response.ok) {

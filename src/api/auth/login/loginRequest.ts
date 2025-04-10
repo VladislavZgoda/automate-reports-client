@@ -13,7 +13,7 @@ export default async function loginRequest(values: LoginFormValues) {
   });
 
   if (response.status === 401) {
-    throw new AuthError(`${response.status} ${await response.json()}`);
+    throw new AuthError(`401 ${await response.json()}`);
   }
 
   if (!response.ok) {
