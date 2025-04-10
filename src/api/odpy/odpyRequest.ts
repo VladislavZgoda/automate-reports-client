@@ -26,9 +26,11 @@ export default async function odpyRequest(token: string, formData: FormData) {
       throw new Error("Invalid server response for status code 422.");
 
     if (response422.data.file === "simsFile") {
-      throw new UnprocessableSimsFileError(response422.data.message);
+      throw new UnprocessableSimsFileError(`422 ${response422.data.message}`);
     } else if (response422.data.file === "piramidaFile") {
-      throw new UnprocessablePiramidaFileError(response422.data.message);
+      throw new UnprocessablePiramidaFileError(
+        `422 ${response422.data.message}`,
+      );
     }
   }
 
