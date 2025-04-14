@@ -58,7 +58,7 @@ export default function LegalEntitiesForm() {
           render={({ field: { value, onChange, ...fieldProps } }) => (
             <FormItem>
               <FormLabel className="text-base">
-                Экспорт отчёта Новые показания
+                Экспорт отчёта &#34;Новые показания&#34;
               </FormLabel>
               <FormControl>
                 <Input
@@ -70,7 +70,7 @@ export default function LegalEntitiesForm() {
                   onChange={(event) => onChange(event.target.files?.[0])}
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="w-60 text-pretty" />
             </FormItem>
           )}
         />
@@ -83,7 +83,7 @@ export default function LegalEntitiesForm() {
             <FormItem>
               <FormLabel className="text-base">
                 Экспорт балансной группы
-                <br /> А+ Текущие Тимашевск
+                <br /> &#34;А+ Текущие Тимашевск&#34;
               </FormLabel>
               <FormControl>
                 <Input
@@ -95,7 +95,7 @@ export default function LegalEntitiesForm() {
                   onChange={(event) => onChange(event.target.files?.[0])}
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="w-60 text-pretty" />
             </FormItem>
           )}
         />
