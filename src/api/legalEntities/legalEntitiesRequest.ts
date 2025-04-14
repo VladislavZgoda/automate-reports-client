@@ -10,7 +10,7 @@ export default async function legalEntitiesRequest(
   token: string,
   formData: FormData,
 ) {
-  const response = await fetch("api/odpy/", {
+  const response = await fetch("api/legal-entities/", {
     method: "POST",
     body: formData,
     headers: {
