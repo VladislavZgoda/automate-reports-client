@@ -14,8 +14,17 @@ describe("LegalEntities", () => {
     const cardDescription = screen.getByText(/Добавьте отчёт/i);
     expect(cardDescription).toBeInTheDocument();
 
-    const fileInputFieldLabel = screen.getByText("Экспорт из Пирамида 2");
-    expect(fileInputFieldLabel).toBeInTheDocument();
+    const metersReadinsFieldLabel = screen.getByText(
+      'Экспорт отчёта "Новые показания"',
+    );
+
+    expect(metersReadinsFieldLabel).toBeInTheDocument();
+
+    const currentMeterReadings = screen.getByText(
+      /Экспорт балансной группы "А\+ Текущие Тимашевск"/,
+    );
+
+    expect(currentMeterReadings).toBeInTheDocument();
 
     const submitButton = screen.getByRole("button", { name: "Сформировать" });
     expect(submitButton).toBeInTheDocument();
@@ -29,30 +38,52 @@ describe("LegalEntities", () => {
     const submitButton = screen.getByRole("button", { name: "Сформировать" });
     await user.click(submitButton);
 
-    const piramidaFileInputFieldError = screen.getByText(
-      "Отсутствует файл экспорта из Пирамида 2.",
+    const meterReadinsFieldError = screen.getByText(
+      "Отсутствует файл экспорта отчёта Новые показания.",
     );
 
-    expect(piramidaFileInputFieldError).toBeInTheDocument();
+    expect(meterReadinsFieldError).toBeInTheDocument();
+
+    const currentMeterReadinsFieldError = screen.getByText(
+      "Отсутствует файл экспорта балансной группы А+ Текущие Тимашевск.",
+    );
+
+    expect(currentMeterReadinsFieldError).toBeInTheDocument();
   });
 
   it("shows an error if the file type is not xlsx", async () => {
     render(<LegalEntities />, { wrapper: BrowserRouter });
 
-    const piramidaFileInput = screen.getByLabelText("Экспорт из Пирамида 2");
+    const meterReadinsInput = screen.getByLabelText(
+      /Экспорт балансной группы "А\+ Текущие Тимашевск"/,
+    );
 
     const xlsFileMock = new File(["test"], "test.xls", {
       type: "application/vnd.ms-excel",
     });
 
-    fireEvent.change(piramidaFileInput, {
+    fireEvent.change(meterReadinsInput, {
       target: { files: { item: () => xlsFileMock, length: 1, 0: xlsFileMock } },
+    });
+
+    const currentMeterReadinsInput = screen.getByLabelText(
+      'Экспорт отчёта "Новые показания"',
+    );
+
+    const txtFileMock = new File(["test"], "test.txt", {
+      type: "text/plain",
+    });
+
+    fireEvent.change(currentMeterReadinsInput, {
+      target: { files: { item: () => txtFileMock, length: 1, 0: txtFileMock } },
     });
 
     const submitButton = screen.getByRole("button", { name: "Сформировать" });
     fireEvent.click(submitButton);
 
-    const invalidFileTypeErrors = await screen.findByText("Тип файла не xlsx.");
-    expect(invalidFileTypeErrors).toBeInTheDocument();
+    const invalidFileTypeErrors =
+      await screen.findAllByText("Тип файла не xlsx.");
+
+    expect(invalidFileTypeErrors.length).toBe(2);
   });
 });
