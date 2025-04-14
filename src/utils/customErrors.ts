@@ -37,3 +37,26 @@ export class UnprocessablePiramidaFileError extends Error {
     Object.setPrototypeOf(this, UnprocessablePiramidaFileError.prototype);
   }
 }
+
+export class UnprocessableMeterReadingsError extends Error {
+  constructor(message: string) {
+    super(message);
+
+    this.name = "UnprocessableMeterReadingsError";
+
+    Object.setPrototypeOf(this, UnprocessableMeterReadingsError.prototype);
+  }
+}
+
+export class UnprocessableCurrentMeterReadingsError extends Error {
+  constructor(message: string) {
+    super(message);
+
+    this.name = "UnprocessableCurrentMeterReadingsError";
+
+    Object.setPrototypeOf(
+      this,
+      UnprocessableCurrentMeterReadingsError.prototype,
+    );
+  }
+}
