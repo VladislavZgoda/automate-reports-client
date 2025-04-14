@@ -14,9 +14,20 @@ import { Input } from "@/components/ui/input";
 import FormButton from "./formButton/FormButton";
 
 const formSchema = z.object({
-  piramidaFile: z
+  meterReadings: z
     .instanceof(File, {
-      message: "Отсутствует файл экспорта из Пирамида 2.",
+      message: "Отсутствует файл экспорта отчёта Новые показания.",
+    })
+    .refine(
+      (file) =>
+        file.type ===
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      { message: "Тип файла не xlsx." },
+    ),
+  currentMeterReadings: z
+    .instanceof(File, {
+      message:
+        "Отсутствует файл экспорта балансной группы А+ Текущие Тимашевск.",
     })
     .refine(
       (file) =>
@@ -42,11 +53,37 @@ export default function LegalEntitiesForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="piramidaFile"
+          name="meterReadings"
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           render={({ field: { value, onChange, ...fieldProps } }) => (
             <FormItem>
-              <FormLabel className="text-base">Экспорт из Пирамида 2</FormLabel>
+              <FormLabel className="text-base">
+                Экспорт отчёта Новые показания
+              </FormLabel>
+              <FormControl>
+                <Input
+                  {...fieldProps}
+                  className="mt-0.5 w-[300px] cursor-pointer"
+                  placeholder="xlsx файл"
+                  type="file"
+                  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                  onChange={(event) => onChange(event.target.files?.[0])}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="currentMeterReadings"
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          render={({ field: { value, onChange, ...fieldProps } }) => (
+            <FormItem>
+              <FormLabel className="text-base">
+                Экспорт балансной группы А+ Текущие Тимашевск
+              </FormLabel>
               <FormControl>
                 <Input
                   {...fieldProps}
