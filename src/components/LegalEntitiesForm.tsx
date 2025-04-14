@@ -82,7 +82,8 @@ export default function LegalEntitiesForm() {
           render={({ field: { value, onChange, ...fieldProps } }) => (
             <FormItem>
               <FormLabel className="text-base">
-                Экспорт балансной группы А+ Текущие Тимашевск
+                Экспорт балансной группы
+                <br /> А+ Текущие Тимашевск
               </FormLabel>
               <FormControl>
                 <Input
