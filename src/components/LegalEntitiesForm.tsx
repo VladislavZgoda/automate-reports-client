@@ -1,5 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRef } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 import { z } from "zod";
 
 import {
@@ -10,7 +12,18 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+
+import {
+  AuthError,
+  UnprocessableCurrentMeterReadingsError,
+  UnprocessableMeterReadingsError,
+} from "src/utils/customErrors";
+
 import { Input } from "@/components/ui/input";
+import legalEntitiesRequest from "src/api/legalEntities/legalEntitiesRequest";
+import useAuthStore from "src/hooks/useAuthStore";
+import downloadFile from "src/utils/downloadFile";
+import refreshToken from "../utils/refreshToken";
 import FormButton from "./formButton/FormButton";
 
 const formSchema = z.object({
@@ -44,8 +57,46 @@ export default function LegalEntitiesForm() {
 
   const isSubmitting = form.formState.isSubmitting;
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const setAccessToken = useAuthStore((state) => state.setAccessToken);
+  const resetToken = useAuthStore((state) => state.reset);
+
+  const formRef = useRef<HTMLFormElement>(null);
+  const navigate = useNavigate();
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const formData = new FormData();
+
+    formData.append("meterReadings", values.meterReadings);
+    formData.append("currentMeterReadings", values.currentMeterReadings);
+
+    try {
+      const token = await refreshToken(accessToken, setAccessToken);
+      const blob = await legalEntitiesRequest(token, formData);
+
+      downloadFile(blob, "Юр.zip");
+
+      formRef.current?.reset();
+      form.reset();
+    } catch (error) {
+      if (error instanceof AuthError) {
+        resetToken();
+
+        await navigate("/login");
+      } else if (error instanceof UnprocessableMeterReadingsError) {
+        form.setError("meterReadings", {
+          message:
+            "Заголовки таблицы xlsx не совпадают с заголовками Экспорт отчёта Новые показания.",
+        });
+      } else if (error instanceof UnprocessableCurrentMeterReadingsError) {
+        form.setError("currentMeterReadings", {
+          message: `Заголовки таблицы xlsx не совпадают с заголовками балансной группы
+                А+ Текущие Тимашевск.`,
+        });
+      } else {
+        console.error(error);
+      }
+    }
   }
 
   return (
