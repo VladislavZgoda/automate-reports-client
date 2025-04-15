@@ -17,12 +17,12 @@ import {
   AuthError,
   UnprocessableCurrentMeterReadingsError,
   UnprocessableMeterReadingsError,
-} from "src/utils/customErrors";
+} from "../utils/customErrors";
 
 import { Input } from "@/components/ui/input";
-import legalEntitiesRequest from "src/api/legalEntities/legalEntitiesRequest";
-import useAuthStore from "src/hooks/useAuthStore";
-import downloadFile from "src/utils/downloadFile";
+import legalEntitiesRequest from "../api/legalEntities/legalEntitiesRequest";
+import useAuthStore from "../hooks/useAuthStore";
+import downloadFile from "../utils/downloadFile";
 import refreshToken from "../utils/refreshToken";
 import FormButton from "./formButton/FormButton";
 
