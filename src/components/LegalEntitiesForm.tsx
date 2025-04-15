@@ -101,7 +101,11 @@ export default function LegalEntitiesForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        ref={formRef}
+        className="space-y-8"
+      >
         <FormField
           control={form.control}
           name="meterReadings"
