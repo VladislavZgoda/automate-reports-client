@@ -77,7 +77,6 @@ export default function LegalEntitiesForm() {
       downloadFile(blob, "Юр.zip");
 
       formRef.current?.reset();
-      form.reset();
     } catch (error) {
       if (error instanceof AuthError) {
         resetToken();
