@@ -1,4 +1,4 @@
-import { Home, Rows3, Sheet, Table } from "lucide-react";
+import { FileSpreadsheet, Home, Rows3, Sheet, Table } from "lucide-react";
 import { Link, useLocation } from "react-router";
 import UserNav from "../../src/components/UserNav";
 
@@ -35,6 +35,11 @@ const items = [
     title: "Юридические лица П2",
     url: "/legal-entities",
     icon: Rows3,
+  },
+  {
+    title: "ВИП",
+    url: "/vip",
+    icon: FileSpreadsheet,
   },
 ];
 
