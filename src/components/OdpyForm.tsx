@@ -70,8 +70,8 @@ export default function OdpyForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const formData = new FormData();
 
-    formData.append("matritcaOdpy", values.simsFile);
-    formData.append("piramidaOdpy", values.piramidaFile);
+    formData.append("simsFile", values.simsFile);
+    formData.append("piramidaFile", values.piramidaFile);
     formData.append("controller", values.controller);
 
     try {
