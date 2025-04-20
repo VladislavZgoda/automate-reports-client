@@ -38,6 +38,15 @@ export default function Home() {
         &#34;Приложение №9 Юридические лица&#34; и не большие ведомости для
         отправки конкретным потребителями по электронной почте.
       </p>
+
+      <div className="mt-3 mb-0.5 ml-[-7px] flex items-center gap-1">
+        <Dot strokeWidth="3px" />
+        <h2 className="text-lg font-bold">ВИП</h2>
+      </div>
+      <p className="ml-5.5 max-w-3xl text-pretty">
+        Позволяет преобразовать экспорт из ПО Пирамида 2 и Sims, в формате xlsx, в
+        ведомости для отправки на ящики филиалов по электронной почте.
+      </p>
     </div>
   );
 }
