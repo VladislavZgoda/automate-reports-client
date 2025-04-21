@@ -47,6 +47,15 @@ export default function Home() {
         Позволяет преобразовать экспорт из ПО Пирамида 2 и Sims, в формате xlsx,
         в ведомости для отправки на ящики филиалов по электронной почте.
       </p>
+
+      <div className="mt-3 mb-0.5 ml-[-7px] flex items-center gap-1">
+        <Dot strokeWidth="3px" />
+        <h2 className="text-lg font-bold">Микрогенерация</h2>
+      </div>
+      <p className="ml-5.5 max-w-3xl text-pretty">
+        Позволяет преобразовать экспорт из ПО Sims, в формате xlsx, в ведомость
+        Микрогенерации.
+      </p>
     </div>
   );
 }
