@@ -6,6 +6,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+import VipForm from "../../components/VipForm";
+
 export default function VIP() {
   return (
     <div className="flex w-full items-center justify-center p-6 md:p-10">
@@ -21,7 +23,9 @@ export default function VIP() {
               Sims в xlsx формате.
             </CardDescription>
           </CardHeader>
-          <CardContent></CardContent>
+          <CardContent>
+            <VipForm />
+          </CardContent>
         </Card>
       </div>
     </div>
