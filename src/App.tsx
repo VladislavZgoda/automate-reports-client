@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import LegalEntities from "./pages/legalEntities/LegalEntities";
 import LoginPage from "./pages/login/Login";
 import MatritcaExport from "./pages/matritcaExport/MatritcaExport";
+import Microgeneration from "./pages/microgeneration/Microgeneration";
 import Odpy from "./pages/odpy/Odpy";
 import Vip from "./pages/vip/Vip";
 import ThemeProvider from "./providers/themeProvider";
@@ -23,6 +24,7 @@ function App() {
               <Route path="/odpy" element={<Odpy />} />
               <Route path="/legal-entities" element={<LegalEntities />} />
               <Route path="/vip" element={<Vip />} />
+              <Route path="/microgeneration" element={<Microgeneration />} />
             </Route>
           </Route>
           <Route path="/login" element={<LoginPage />} />

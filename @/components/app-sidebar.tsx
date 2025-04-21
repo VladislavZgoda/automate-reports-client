@@ -1,4 +1,4 @@
-import { FileSpreadsheet, Home, Rows3, Sheet, Table } from "lucide-react";
+import { FileSpreadsheet, Home, Rows3, Sheet, Table, FilePlus } from "lucide-react";
 import { Link, useLocation } from "react-router";
 import UserNav from "../../src/components/UserNav";
 
@@ -40,6 +40,11 @@ const items = [
     title: "ВИП",
     url: "/vip",
     icon: FileSpreadsheet,
+  },
+  {
+    title: "Микрогенерация",
+    url: "/microgeneration",
+    icon: FilePlus,
   },
 ];
 
