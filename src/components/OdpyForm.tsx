@@ -3,13 +3,15 @@ import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { z } from "zod";
-import odpyRequest from "../api/odpy/odpyRequest";
+import request from "../api/endpoint/request";
 import useAuthStore from "../hooks/useAuthStore";
+
 import {
   AuthError,
   UnprocessablePiramidaFileError,
   UnprocessableSimsFileError,
 } from "../utils/customErrors";
+
 import downloadFile from "../utils/downloadFile";
 import refreshToken from "../utils/refreshToken";
 
@@ -76,7 +78,7 @@ export default function OdpyForm() {
 
     try {
       const token = await refreshToken(accessToken, setAccessToken);
-      const blob = await odpyRequest(token, formData);
+      const blob = await request("api/odpy/", token, formData);
 
       downloadFile(blob, "ОДПУ.zip");
 
