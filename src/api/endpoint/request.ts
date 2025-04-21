@@ -4,10 +4,14 @@ import {
   UnprocessableSimsFileError,
 } from "../../utils/customErrors";
 
-import { response422OdpySchema } from "../../validation/response422";
+import { response422Schema } from "../../validation/response422";
 
-export default async function odpyRequest(token: string, formData: FormData) {
-  const response = await fetch("api/odpy/", {
+export default async function request(
+  url: "api/odpy/" | "api/vip/",
+  token: string,
+  formData: FormData,
+) {
+  const response = await fetch(url, {
     method: "POST",
     body: formData,
     headers: {
@@ -20,7 +24,7 @@ export default async function odpyRequest(token: string, formData: FormData) {
   }
 
   if (response.status === 422) {
-    const response422 = response422OdpySchema.safeParse(await response.json());
+    const response422 = response422Schema.safeParse(await response.json());
 
     if (!response422.success)
       throw new Error("Invalid server response for status code 422.");

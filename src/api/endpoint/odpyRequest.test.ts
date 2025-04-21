@@ -7,7 +7,7 @@ import {
   UnprocessableSimsFileError,
 } from "../../utils/customErrors";
 
-import odpyRequest from "./odpyRequest";
+import odpyRequest from "./request";
 
 const server = setupServer();
 
