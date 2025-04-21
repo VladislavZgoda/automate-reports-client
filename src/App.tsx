@@ -6,7 +6,7 @@ import LegalEntities from "./pages/legalEntities/LegalEntities";
 import LoginPage from "./pages/login/Login";
 import MatritcaExport from "./pages/matritcaExport/MatritcaExport";
 import Odpy from "./pages/odpy/Odpy";
-import VIP from "./pages/vip/VIP";
+import Vip from "./pages/vip/Vip";
 import ThemeProvider from "./providers/themeProvider";
 import PersistLogin from "./routes/persistLogin";
 import ProtectedRoute from "./routes/protectedRoute";
@@ -22,7 +22,7 @@ function App() {
               <Route path="/matritca-export" element={<MatritcaExport />} />
               <Route path="/odpy" element={<Odpy />} />
               <Route path="/legal-entities" element={<LegalEntities />} />
-              <Route path="/vip" element={<VIP />} />
+              <Route path="/vip" element={<Vip />} />
             </Route>
           </Route>
           <Route path="/login" element={<LoginPage />} />

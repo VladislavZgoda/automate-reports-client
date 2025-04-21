@@ -8,7 +8,7 @@ import {
 
 import VipForm from "../../components/VipForm";
 
-export default function VIP() {
+export default function Vip() {
   return (
     <div className="flex w-full items-center justify-center p-6 md:p-10">
       <div className="w-full max-w-md">
