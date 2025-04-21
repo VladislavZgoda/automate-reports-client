@@ -1,4 +1,12 @@
-import { FileSpreadsheet, Home, Rows3, Sheet, Table, FilePlus } from "lucide-react";
+import {
+  FilePlus,
+  FileSpreadsheet,
+  Home,
+  Rows3,
+  Sheet,
+  Table,
+} from "lucide-react";
+
 import { Link, useLocation } from "react-router";
 import UserNav from "../../src/components/UserNav";
 
