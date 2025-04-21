@@ -53,8 +53,8 @@ export default function Home() {
         <h2 className="text-lg font-bold">Микрогенерация</h2>
       </div>
       <p className="ml-5.5 max-w-3xl text-pretty">
-        Позволяет преобразовать экспорт из ПО Sims, в формате xlsx, в ведомость
-        Микрогенерации.
+        Позволяет преобразовать экспорт из ПО Sims, в формате xlsx, в ведомость с
+        Микрогенерацией.
       </p>
     </div>
   );

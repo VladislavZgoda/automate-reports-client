@@ -18,7 +18,7 @@ export default function MatritcaExport() {
               Обработка экспорта из Sims client
             </CardTitle>
             <CardDescription>
-              Введите балансную группу и добавьте файл в xlsx формате.
+              Выберете балансную группу и добавьте файл в xlsx формате.
             </CardDescription>
           </CardHeader>
           <CardContent>
