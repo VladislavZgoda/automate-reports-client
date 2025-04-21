@@ -7,7 +7,7 @@ import {
   UnprocessableSimsFileError,
 } from "../../utils/customErrors";
 
-import odpyRequest from "./request";
+import request from "./request";
 
 const server = setupServer();
 
@@ -17,7 +17,7 @@ const mockFormData = new FormData();
 beforeAll(() => server.listen());
 afterAll(() => server.close());
 
-describe("odpyRequest", () => {
+describe("request", () => {
   it("returns blob", async () => {
     server.use(
       http.post("api/odpy/", () => {
@@ -25,7 +25,7 @@ describe("odpyRequest", () => {
       }),
     );
 
-    const blob = await odpyRequest(mockToken, mockFormData);
+    const blob = await request("api/odpy/", mockToken, mockFormData);
 
     expect(blob).toBeInstanceOf(Blob);
   });
@@ -38,7 +38,7 @@ describe("odpyRequest", () => {
     );
 
     try {
-      await odpyRequest(mockToken, mockFormData);
+      await request("api/odpy/", mockToken, mockFormData);
     } catch (error) {
       expect(error).toBeInstanceOf(AuthError);
 
@@ -55,7 +55,7 @@ describe("odpyRequest", () => {
     );
 
     try {
-      await odpyRequest(mockToken, mockFormData);
+      await request("api/odpy/", mockToken, mockFormData);
     } catch (error) {
       expect(error).toBeInstanceOf(AuthError);
 
@@ -80,7 +80,7 @@ describe("odpyRequest", () => {
     );
 
     try {
-      await odpyRequest(mockToken, mockFormData);
+      await request("api/odpy/", mockToken, mockFormData);
     } catch (error) {
       expect(error).toBeInstanceOf(UnprocessableSimsFileError);
 
@@ -107,7 +107,7 @@ describe("odpyRequest", () => {
     );
 
     try {
-      await odpyRequest(mockToken, mockFormData);
+      await request("api/odpy/", mockToken, mockFormData);
     } catch (error) {
       expect(error).toBeInstanceOf(UnprocessablePiramidaFileError);
 
@@ -127,7 +127,7 @@ describe("odpyRequest", () => {
     );
 
     try {
-      await odpyRequest(mockToken, mockFormData);
+      await request("api/odpy/", mockToken, mockFormData);
     } catch (error) {
       expect(error).toBeInstanceOf(Error);
 
