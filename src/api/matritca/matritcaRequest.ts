@@ -1,10 +1,11 @@
 import { AuthError, UnprocessableEntityError } from "../../utils/customErrors";
 
 export default async function matritcaRequest(
+  url: "api/matritca/" | "api/microgeneration/",
   token: string,
   formData: FormData,
 ) {
-  const response = await fetch("api/matritca/", {
+  const response = await fetch(url, {
     method: "POST",
     body: formData,
     headers: {

@@ -84,7 +84,7 @@ export default function MatritcaForm() {
 
     try {
       const token = await refreshToken(accessToken, setAccessToken);
-      const blob = await matritcaRequest(token, formData);
+      const blob = await matritcaRequest("api/matritca/", token, formData);
 
       const fileName =
         values.balanceGroup === "private" ? "Быт.zip" : "Приложение №9 Юр.xlsx";
