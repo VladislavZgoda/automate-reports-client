@@ -16,7 +16,7 @@ export default function Microgeneration() {
               Cформировать ведомость с Микрогенерацией
             </CardTitle>
             <CardDescription>
-              Добавьте файл с экспортом - импортом Актиной энергии из Sims в
+              Добавьте файл с экспортом - импортом Активной энергии из Sims в
               xlsx формате и выберете балансную группу.
             </CardDescription>
           </CardHeader>
