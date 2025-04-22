@@ -21,7 +21,11 @@ describe("matritcaRequest", () => {
       }),
     );
 
-    const blob = await matritcaRequest(mockToken, mockFormData);
+    const blob = await matritcaRequest(
+      "api/matritca/",
+      mockToken,
+      mockFormData,
+    );
 
     expect(blob).toBeInstanceOf(Blob);
   });
@@ -34,7 +38,7 @@ describe("matritcaRequest", () => {
     );
 
     try {
-      await matritcaRequest(mockToken, mockFormData);
+      await matritcaRequest("api/matritca/", mockToken, mockFormData);
     } catch (error) {
       expect(error).toBeInstanceOf(AuthError);
 
@@ -51,7 +55,7 @@ describe("matritcaRequest", () => {
     );
 
     try {
-      await matritcaRequest(mockToken, mockFormData);
+      await matritcaRequest("api/matritca/", mockToken, mockFormData);
     } catch (error) {
       expect(error).toBeInstanceOf(AuthError);
 
@@ -71,7 +75,7 @@ describe("matritcaRequest", () => {
     );
 
     try {
-      await matritcaRequest(mockToken, mockFormData);
+      await matritcaRequest("api/matritca/", mockToken, mockFormData);
     } catch (error) {
       expect(error).toBeInstanceOf(UnprocessableEntityError);
 
@@ -90,7 +94,7 @@ describe("matritcaRequest", () => {
     );
 
     try {
-      await matritcaRequest(mockToken, mockFormData);
+      await matritcaRequest("api/matritca/", mockToken, mockFormData);
     } catch (error) {
       expect(error).toBeInstanceOf(Error);
 

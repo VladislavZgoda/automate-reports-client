@@ -46,7 +46,7 @@ describe("MatritcaExport", () => {
 
     expect(
       screen.getByText(
-        "Введите балансную группу и добавьте файл в xlsx формате.",
+        "Выберете балансную группу и добавьте файл в xlsx формате.",
       ),
     ).toBeInTheDocument();
 
