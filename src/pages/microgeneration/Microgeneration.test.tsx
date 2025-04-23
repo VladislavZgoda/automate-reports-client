@@ -1,4 +1,5 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { BrowserRouter } from "react-router";
 import { vi } from "vitest";
 
@@ -27,6 +28,9 @@ Object.assign(window.HTMLElement.prototype, {
   releasePointerCapture: vi.fn(),
   hasPointerCapture: vi.fn(),
 });
+
+vi.mock("../../utils/refreshToken");
+vi.mock("../../utils/downloadFile");
 
 describe("Microgeneration", () => {
   it("renders Microgeneration component", () => {
@@ -68,6 +72,41 @@ describe("Microgeneration", () => {
     const fileInputError = await screen.findByText("Отсутствует xlsx файл.");
 
     expect(fileInputError).toBeInTheDocument();
+  });
+
+  it("does not show errors when form input fields are not empty", async () => {
+    const user = userEvent.setup();
+
+    render(<Microgeneration />, { wrapper: BrowserRouter });
+
+    const selectButtonElement = screen.getByRole("combobox");
+    await user.click(selectButtonElement);
+
+    const selectOption = screen.getAllByText("БЫТ");
+    await user.click(selectOption[1]);
+
+    const fileInput = screen.getByLabelText("Экспорт из Sims");
+
+    const mockXlsxFile = new File(["test"], "test.xlsx", {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+
+    await user.upload(fileInput, mockXlsxFile);
+
+    const submitButton = screen.getByRole("button");
+    fireEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(
+        screen.queryByText("Балансная группа не выбрана."),
+      ).not.toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.queryByText("Отсутствует xlsx файл."),
+      ).not.toBeInTheDocument();
+    });
   });
 
   it("shows an error if the file type is not xlsx", async () => {
