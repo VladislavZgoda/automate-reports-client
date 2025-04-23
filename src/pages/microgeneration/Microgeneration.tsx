@@ -6,6 +6,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+import MicrogenerationForm from "../../components/MicrogenerationForm";
+
 export default function Microgeneration() {
   return (
     <div className="flex w-full items-center justify-center p-6 md:p-10">
@@ -20,7 +22,9 @@ export default function Microgeneration() {
               xlsx формате и выберете балансную группу.
             </CardDescription>
           </CardHeader>
-          <CardContent></CardContent>
+          <CardContent>
+            <MicrogenerationForm />
+          </CardContent>
         </Card>
       </div>
     </div>
