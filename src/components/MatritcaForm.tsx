@@ -1,5 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { z } from "zod";
@@ -26,7 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import Select from "./SelectWithReset";
+import Select from "./SelectWithState";
 
 const formSchema = z
   .object({
@@ -71,7 +70,6 @@ export default function MatritcaForm() {
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
   const resetToken = useAuthStore((state) => state.reset);
 
-  const formRef = useRef<HTMLFormElement>(null);
   const navigate = useNavigate();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -91,8 +89,7 @@ export default function MatritcaForm() {
 
       downloadFile(blob, fileName);
 
-      formRef.current?.reset();
-      form.reset();
+      window.location.reload();
     } catch (error) {
       if (error instanceof AuthError) {
         resetToken();
@@ -111,11 +108,7 @@ export default function MatritcaForm() {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8"
-        ref={formRef}
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
           name="balanceGroup"

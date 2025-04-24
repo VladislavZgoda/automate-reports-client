@@ -1,5 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { z } from "zod";
@@ -26,7 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import Select from "./SelectWithReset";
+import Select from "./SelectWithState";
 
 const formSchema = z.object({
   balanceGroup: z.enum(["private", "legal"], {
@@ -57,7 +56,6 @@ export default function MicrogenerationForm() {
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
   const resetToken = useAuthStore((state) => state.reset);
 
-  const formRef = useRef<HTMLFormElement>(null);
   const navigate = useNavigate();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -77,8 +75,7 @@ export default function MicrogenerationForm() {
 
       downloadFile(blob, "Микрогенерация.xlsx");
 
-      formRef.current?.reset();
-      form.reset();
+      window.location.reload();
     } catch (error) {
       if (error instanceof AuthError) {
         resetToken();
@@ -97,11 +94,7 @@ export default function MicrogenerationForm() {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8"
-        ref={formRef}
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
           name="balanceGroup"
