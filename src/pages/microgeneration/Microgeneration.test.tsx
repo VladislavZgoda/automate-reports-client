@@ -32,6 +32,22 @@ Object.assign(window.HTMLElement.prototype, {
 vi.mock("../../utils/refreshToken");
 vi.mock("../../utils/downloadFile");
 
+const original = window.location;
+
+beforeAll(() => {
+  Object.defineProperty(window, "location", {
+    configurable: true,
+    value: { reload: vi.fn() },
+  });
+});
+
+afterAll(() => {
+  Object.defineProperty(window, "location", {
+    configurable: true,
+    value: original,
+  });
+});
+
 describe("Microgeneration", () => {
   it("renders Microgeneration component", () => {
     render(<Microgeneration />, { wrapper: BrowserRouter });

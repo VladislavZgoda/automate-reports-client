@@ -36,6 +36,22 @@ const mockXlsxFile = new File(["test"], "test.xlsx", {
 vi.mock("../../utils/refreshToken");
 vi.mock("../../utils/downloadFile");
 
+const original = window.location;
+
+beforeAll(() => {
+  Object.defineProperty(window, "location", {
+    configurable: true,
+    value: { reload: vi.fn() },
+  });
+});
+
+afterAll(() => {
+  Object.defineProperty(window, "location", {
+    configurable: true,
+    value: original,
+  });
+});
+
 describe("MatritcaExport", () => {
   it("renders MatritcaExport component", () => {
     render(<MatritcaExport />, { wrapper: BrowserRouter });
