@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router";
 import { z } from "zod";
 import LoginButton from "./loginButton/LoginButton";
+import authTokenStore from "../store/authTokenStore";
 
 import {
   Form,
@@ -16,7 +17,7 @@ import {
 
 import { Input } from "@/components/ui/input";
 import loginRequest from "../api/auth/login/loginRequest";
-import useAuthStore from "../hooks/useAuthStore";
+// import useAuthStore from "../hooks/useAuthStore";
 import { AuthError } from "../utils/customErrors";
 
 interface LocationState {
@@ -31,8 +32,9 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
-  const accessToken = useAuthStore((state) => state.accessToken);
-  const setAccessToken = useAuthStore((state) => state.setAccessToken);
+  // const accessToken = useAuthStore((state) => state.accessToken);
+  // const setAccessToken = useAuthStore((state) => state.setAccessToken);
+  const accessToken = authTokenStore.getState().accessToken;
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -58,7 +60,8 @@ export default function LoginForm() {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const accessToken = await loginRequest(values);
-      setAccessToken(accessToken);
+      //setAccessToken(accessToken);
+      authTokenStore.getState().setAccessToken(accessToken);
 
       await navigate(origin);
     } catch (error) {
