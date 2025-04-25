@@ -3,8 +3,8 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router";
 import { z } from "zod";
-import LoginButton from "./loginButton/LoginButton";
 import authTokenStore from "../store/authTokenStore";
+import LoginButton from "./loginButton/LoginButton";
 
 import {
   Form,

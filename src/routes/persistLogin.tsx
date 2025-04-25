@@ -1,14 +1,25 @@
+import { jwtDecode } from "jwt-decode";
 import { Loader2 } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { Outlet } from "react-router";
 import refreshTokenRequest from "../api/auth/refersh/refreshToken";
-import useAuthStore from "../hooks/useAuthStore";
 import useTheme from "../hooks/useTheme";
+import authTokenStore from "../store/authTokenStore";
 
 export default function PersistLogin() {
-  const [isLoading, setIsLoading] = useState(true);
-  const accessToken = useAuthStore((state) => state.accessToken);
-  const setAccessToken = useAuthStore((state) => state.setAccessToken);
+  const [isLoading, setIsLoading] = useState(false);
+  const accessToken = authTokenStore.getState().accessToken;
+
+  const decoded = jwtDecode(accessToken);
+
+  if (!decoded.exp) {
+    throw new Error("There is something wrong with JWT token.");
+  }
+
+  const currentTime = Math.round(Date.now() / 1000);
+  const isExpired = decoded.exp <= currentTime;
+
+  if (!accessToken || isExpired) setIsLoading(true);
 
   const { theme } = useTheme();
 
@@ -16,21 +27,21 @@ export default function PersistLogin() {
     try {
       const token = await refreshTokenRequest();
 
-      setAccessToken(token);
+      authTokenStore.getState().setAccessToken(token);
     } catch (error) {
       console.error(error);
     } finally {
       setIsLoading(false);
     }
-  }, [setAccessToken]);
+  }, []);
 
   useEffect(() => {
-    if (!accessToken) {
+    if (!accessToken || isExpired) {
       void handleRefreshToken();
     } else {
       setIsLoading(false);
     }
-  }, [accessToken, handleRefreshToken]);
+  }, [accessToken, handleRefreshToken, isExpired]);
 
   return (
     <>

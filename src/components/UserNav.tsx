@@ -17,7 +17,7 @@ import {
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router";
 import logoutRequest from "../api/auth/logout/logoutRequest";
-import useAuthStore from "../hooks/useAuthStore";
+import authTokenStore from "../store/authTokenStore";
 import ThemeToggle from "./ThemeToggle";
 
 interface JwtPayload {
@@ -28,10 +28,7 @@ interface JwtPayload {
 
 export default function UserNav() {
   const navigate = useNavigate();
-
-  const accessToken = useAuthStore((state) => state.accessToken);
-  const resetToken = useAuthStore((state) => state.reset);
-
+  const accessToken = authTokenStore.getState().accessToken;
   const decodedToken = jwtDecode<JwtPayload>(accessToken);
 
   const onLogout = async () => {
@@ -41,7 +38,7 @@ export default function UserNav() {
       console.log(error);
     }
 
-    resetToken();
+    authTokenStore.getState().reset();
     await navigate("/login");
   };
 

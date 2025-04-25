@@ -7,6 +7,7 @@ interface AuthTokenStoreState {
 
 interface AuthTokenStoreActions {
   setAccessToken: (accessToken: AuthTokenStoreState["accessToken"]) => void;
+  reset: () => void;
 }
 
 type AuthTokenStore = AuthTokenStoreState & AuthTokenStoreActions;
@@ -16,6 +17,7 @@ const authTokenStore = createStore<AuthTokenStore>()(
     (set) => ({
       accessToken: "",
       setAccessToken: (accessToken) => set({ accessToken: accessToken }),
+      reset: () => set({ accessToken: "" }),
     }),
     { name: "auth-token-store" },
   ),

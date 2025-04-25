@@ -1,8 +1,8 @@
 import { Navigate, Outlet, useLocation } from "react-router";
-import useAuthStore from "../hooks/useAuthStore";
+import authTokenStore from "../store/authTokenStore";
 
 export default function ProtectedRoute() {
-  const accessToken = useAuthStore((state) => state.accessToken);
+  const accessToken = authTokenStore.getState().accessToken;
   const location = useLocation();
 
   if (!accessToken) {
