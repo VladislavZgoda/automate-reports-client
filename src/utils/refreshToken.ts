@@ -1,10 +1,8 @@
 import { jwtDecode } from "jwt-decode";
 import refreshTokenRequest from "../api/auth/refersh/refreshToken";
+import authTokenStore from "../store/authTokenStore";
 
-export default async function refreshToken(
-  token: string,
-  setToken: (token: string) => void,
-) {
+export default async function refreshToken(token: string) {
   const decoded = jwtDecode(token);
 
   if (!decoded.exp) {
@@ -17,7 +15,7 @@ export default async function refreshToken(
   if (isExpired) {
     const newToken = await refreshTokenRequest();
 
-    setToken(newToken);
+    authTokenStore.getState().setAccessToken(token);
 
     return newToken;
   } else {
