@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { z } from "zod";
 import matritcaRequest from "../api/matritca/matritcaRequest";
-import useAuthStore from "../hooks/useAuthStore";
+import authTokenStore from "../store/authTokenStore";
 import { AuthError, UnprocessableEntityError } from "../utils/customErrors";
 import downloadFile from "../utils/downloadFile";
 import refreshToken from "../utils/refreshToken";
@@ -51,10 +51,7 @@ export default function MicrogenerationForm() {
   });
 
   const isSubmitting = form.formState.isSubmitting;
-
-  const accessToken = useAuthStore((state) => state.accessToken);
-  const setAccessToken = useAuthStore((state) => state.setAccessToken);
-  const resetToken = useAuthStore((state) => state.reset);
+  const accessToken = authTokenStore.getState().accessToken;
 
   const navigate = useNavigate();
 
@@ -65,7 +62,7 @@ export default function MicrogenerationForm() {
     formData.append("upload", values.file);
 
     try {
-      const token = await refreshToken(accessToken, setAccessToken);
+      const token = await refreshToken(accessToken);
 
       const blob = await matritcaRequest(
         "api/microgeneration/",
@@ -78,7 +75,7 @@ export default function MicrogenerationForm() {
       window.location.reload();
     } catch (error) {
       if (error instanceof AuthError) {
-        resetToken();
+        authTokenStore.getState().reset();
 
         await navigate("/login");
       } else if (error instanceof UnprocessableEntityError) {

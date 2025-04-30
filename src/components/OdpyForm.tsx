@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { z } from "zod";
 import request from "../api/endpoint/request";
-import useAuthStore from "../hooks/useAuthStore";
+import authTokenStore from "../store/authTokenStore";
 
 import {
   AuthError,
@@ -61,10 +61,7 @@ export default function OdpyForm() {
   });
 
   const isSubmitting = form.formState.isSubmitting;
-
-  const accessToken = useAuthStore((state) => state.accessToken);
-  const setAccessToken = useAuthStore((state) => state.setAccessToken);
-  const resetToken = useAuthStore((state) => state.reset);
+  const accessToken = authTokenStore.getState().accessToken;
 
   const formRef = useRef<HTMLFormElement>(null);
   const navigate = useNavigate();
@@ -77,7 +74,7 @@ export default function OdpyForm() {
     formData.append("controller", values.controller);
 
     try {
-      const token = await refreshToken(accessToken, setAccessToken);
+      const token = await refreshToken(accessToken);
       const blob = await request("api/odpy/", token, formData);
 
       downloadFile(blob, "ОДПУ.zip");
@@ -86,7 +83,7 @@ export default function OdpyForm() {
       form.reset();
     } catch (error) {
       if (error instanceof AuthError) {
-        resetToken();
+        authTokenStore.getState().reset();
 
         await navigate("/login");
       } else if (error instanceof UnprocessableSimsFileError) {
