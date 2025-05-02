@@ -60,3 +60,16 @@ export class UnprocessableCurrentMeterReadingsError extends Error {
     );
   }
 }
+
+export class UnprocessableReportNineError extends Error {
+  constructor(message: string) {
+    super(message);
+
+    this.name = "UnprocessableReportNineError";
+
+    Object.setPrototypeOf(
+      this,
+      UnprocessableReportNineError.prototype,
+    );
+  }
+}
