@@ -56,6 +56,15 @@ export default function Home() {
         Позволяет преобразовать экспорт из ПО Sims, в формате xlsx, в ведомость
         с Микрогенерацией.
       </p>
+
+      <div className="mt-3 mb-0.5 ml-[-7px] flex items-center gap-1">
+        <Dot strokeWidth="3px" />
+        <h2 className="text-lg font-bold">Не загруженные 25</h2>
+      </div>
+      <p className="ml-5.5 max-w-3xl text-pretty">
+        Позволяет преобразовать экспорт из ПО Sims, в формате xlsx, в файл из которого удаленны
+        бытовые потребители, показания которых были переданы 25 числа.
+      </p>
     </div>
   );
 }
