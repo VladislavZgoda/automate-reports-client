@@ -67,9 +67,6 @@ export class UnprocessableReportNineError extends Error {
 
     this.name = "UnprocessableReportNineError";
 
-    Object.setPrototypeOf(
-      this,
-      UnprocessableReportNineError.prototype,
-    );
+    Object.setPrototypeOf(this, UnprocessableReportNineError.prototype);
   }
 }

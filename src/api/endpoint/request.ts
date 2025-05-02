@@ -1,13 +1,35 @@
 import {
   AuthError,
+  UnprocessableCurrentMeterReadingsError,
+  UnprocessableMeterReadingsError,
   UnprocessablePiramidaFileError,
+  UnprocessableReportNineError,
   UnprocessableSimsFileError,
 } from "../../utils/customErrors";
 
-import { response422Schema } from "../../validation/response422";
+import { z } from "zod";
+
+const response422Schema = z.object({
+  file: z.enum([
+    "simsFile",
+    "piramidaFile",
+    "meterReadings",
+    "currentMeterReadings",
+    "reportNineFile",
+  ]),
+  message: z.string().min(1),
+});
+
+type Url =
+  | "api/odpy/"
+  | "api/vip/"
+  | "api/legal-entities/"
+  | "api/matritca/"
+  | "api/microgeneration/"
+  | "api/private-not-transferred/";
 
 export default async function request(
-  url: "api/odpy/" | "api/vip/",
+  url: Url,
   token: string,
   formData: FormData,
 ) {
@@ -29,12 +51,25 @@ export default async function request(
     if (!response422.success)
       throw new Error("Invalid server response for status code 422.");
 
-    if (response422.data.file === "simsFile") {
-      throw new UnprocessableSimsFileError(`422 ${response422.data.message}`);
-    } else if (response422.data.file === "piramidaFile") {
-      throw new UnprocessablePiramidaFileError(
-        `422 ${response422.data.message}`,
-      );
+    switch (response422.data.file) {
+      case "simsFile":
+        throw new UnprocessableSimsFileError(`422 ${response422.data.message}`);
+      case "piramidaFile":
+        throw new UnprocessablePiramidaFileError(
+          `422 ${response422.data.message}`,
+        );
+      case "meterReadings":
+        throw new UnprocessableMeterReadingsError(
+          `422 ${response422.data.message}`,
+        );
+      case "currentMeterReadings":
+        throw new UnprocessableCurrentMeterReadingsError(
+          `422 ${response422.data.message}`,
+        );
+      case "reportNineFile":
+        throw new UnprocessableReportNineError(
+          `422 ${response422.data.message}`,
+        );
     }
   }
 
