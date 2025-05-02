@@ -6,6 +6,7 @@ import LegalEntities from "./pages/legalEntities/LegalEntities";
 import LoginPage from "./pages/login/Login";
 import MatritcaExport from "./pages/matritcaExport/MatritcaExport";
 import Microgeneration from "./pages/microgeneration/Microgeneration";
+import PrivateNotTransferred from "./pages/notTransferred/NotTransferred";
 import Odpy from "./pages/odpy/Odpy";
 import Vip from "./pages/vip/Vip";
 import ThemeProvider from "./providers/themeProvider";
@@ -25,6 +26,10 @@ function App() {
               <Route path="/legal-entities" element={<LegalEntities />} />
               <Route path="/vip" element={<Vip />} />
               <Route path="/microgeneration" element={<Microgeneration />} />
+              <Route
+                path="/private-not-transferred"
+                element={<PrivateNotTransferred />}
+              />
             </Route>
           </Route>
         </Route>

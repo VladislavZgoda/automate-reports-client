@@ -1,4 +1,5 @@
 import {
+  FileMinus,
   FilePlus,
   FileSpreadsheet,
   Home,
@@ -53,6 +54,11 @@ const items = [
     title: "Микрогенерация",
     url: "/microgeneration",
     icon: FilePlus,
+  },
+  {
+    title: "Не загруженные 25",
+    url: "/private-not-transferred",
+    icon: FileMinus,
   },
 ];
 
