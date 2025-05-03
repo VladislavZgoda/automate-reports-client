@@ -3,7 +3,10 @@ import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 import {
   AuthError,
+  UnprocessableCurrentMeterReadingsError,
+  UnprocessableMeterReadingsError,
   UnprocessablePiramidaFileError,
+  UnprocessableReportNineError,
   UnprocessableSimsFileError,
 } from "../../utils/customErrors";
 
@@ -116,6 +119,87 @@ describe("request", () => {
           `422 The xlsx table headers do not match the headers of the report
            on readings from Pyramida 2 with a range of 4 days.`,
         );
+    }
+  });
+
+  it(`throws UnprocessableMeterReadingsError if the response status is 422
+        and report New Readings is invalid`, async () => {
+    const errorMessage = `The xlsx table headers do not match the default export headers
+             from report New Readings in Piramida 2.`;
+
+    server.use(
+      http.post("api/legal-entities/", () => {
+        return HttpResponse.json(
+          {
+            file: "meterReadings",
+            message: errorMessage,
+          },
+          { status: 422 },
+        );
+      }),
+    );
+
+    try {
+      await request("api/legal-entities/", mockToken, mockFormData);
+    } catch (error) {
+      expect(error).toBeInstanceOf(UnprocessableMeterReadingsError);
+
+      if (error instanceof UnprocessableMeterReadingsError)
+        expect(error.message).toBe(`422 ${errorMessage}`);
+    }
+  });
+
+  it(`throws UnprocessableCurrentMeterReadingsError if the response status is 422
+        and "A+ Current Timashevsk" balance group export is invalid`, async () => {
+    const errorMessage = `The xlsx table headers do not match the headers of the
+             "A+ Current Timashevsk" balance group export from Pyramida 2.`;
+
+    server.use(
+      http.post("api/legal-entities/", () => {
+        return HttpResponse.json(
+          {
+            file: "currentMeterReadings",
+            message: errorMessage,
+          },
+          { status: 422 },
+        );
+      }),
+    );
+
+    try {
+      await request("api/legal-entities/", mockToken, mockFormData);
+    } catch (error) {
+      expect(error).toBeInstanceOf(UnprocessableCurrentMeterReadingsError);
+
+      if (error instanceof UnprocessableCurrentMeterReadingsError)
+        expect(error.message).toBe(`422 ${errorMessage}`);
+    }
+  });
+
+  it(`throws UnprocessableReportNineError if the response status is 422
+      and "report №9" is invalid`, async () => {
+    const errorMessage =
+      "The xlsx table headers do not match the headers from report №9.";
+
+    server.use(
+      http.post("api/private-not-transferred/", () => {
+        return HttpResponse.json(
+          {
+            file: "reportNineFile",
+            message: errorMessage,
+          },
+          { status: 422 },
+        );
+      }),
+    );
+
+    try {
+      await request("api/private-not-transferred/", mockToken, mockFormData);
+    } catch (error) {
+      expect(error).toBeInstanceOf(UnprocessableReportNineError);
+
+      if (error instanceof UnprocessableReportNineError)
+        expect(error.message).toBe(`422 ${errorMessage}`);
     }
   });
 
