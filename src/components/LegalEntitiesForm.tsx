@@ -20,7 +20,7 @@ import {
 } from "../utils/customErrors";
 
 import { Input } from "@/components/ui/input";
-import legalEntitiesRequest from "../api/legalEntities/legalEntitiesRequest";
+import request from "../api/endpoint/request";
 import authTokenStore from "../store/authTokenStore";
 import downloadFile from "../utils/downloadFile";
 import refreshToken from "../utils/refreshToken";
@@ -69,7 +69,7 @@ export default function LegalEntitiesForm() {
 
     try {
       const token = await refreshToken(accessToken);
-      const blob = await legalEntitiesRequest(token, formData);
+      const blob = await request("api/legal-entities/", token, formData);
 
       downloadFile(blob, "Юр.zip");
 

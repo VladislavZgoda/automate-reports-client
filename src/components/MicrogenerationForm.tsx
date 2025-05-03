@@ -2,9 +2,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { z } from "zod";
-import matritcaRequest from "../api/matritca/matritcaRequest";
+import request from "../api/endpoint/request";
 import authTokenStore from "../store/authTokenStore";
-import { AuthError, UnprocessableEntityError } from "../utils/customErrors";
+import { AuthError, UnprocessableSimsFileError } from "../utils/customErrors";
 import downloadFile from "../utils/downloadFile";
 import refreshToken from "../utils/refreshToken";
 
@@ -63,12 +63,7 @@ export default function MicrogenerationForm() {
 
     try {
       const token = await refreshToken(accessToken);
-
-      const blob = await matritcaRequest(
-        "api/microgeneration/",
-        token,
-        formData,
-      );
+      const blob = await request("api/microgeneration/", token, formData);
 
       downloadFile(blob, "Микрогенерация.xlsx");
 
@@ -78,7 +73,7 @@ export default function MicrogenerationForm() {
         authTokenStore.getState().reset();
 
         await navigate("/login");
-      } else if (error instanceof UnprocessableEntityError) {
+      } else if (error instanceof UnprocessableSimsFileError) {
         form.setError("file", {
           message:
             "Заголовки таблицы xlsx не совпадают с заголовками файла с импортом - экспортом из Sims.",
