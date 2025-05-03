@@ -6,6 +6,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+import NotTransferredForm from "../../components/NotTransferredForm";
+
 export default function PrivateNotTransferred() {
   return (
     <div className="flex w-full items-center justify-center p-6 md:p-10">
@@ -20,7 +22,9 @@ export default function PrivateNotTransferred() {
               &#34;Приложение №9&#34;.
             </CardDescription>
           </CardHeader>
-          <CardContent></CardContent>
+          <CardContent>
+            <NotTransferredForm />
+          </CardContent>
         </Card>
       </div>
     </div>
