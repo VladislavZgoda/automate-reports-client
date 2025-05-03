@@ -8,16 +8,6 @@ export class AuthError extends Error {
   }
 }
 
-export class UnprocessableEntityError extends Error {
-  constructor(message: string) {
-    super(message);
-
-    this.name = "UnprocessableEntityError";
-
-    Object.setPrototypeOf(this, UnprocessableEntityError.prototype);
-  }
-}
-
 export class UnprocessableSimsFileError extends Error {
   constructor(message: string) {
     super(message);
