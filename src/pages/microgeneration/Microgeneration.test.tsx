@@ -90,7 +90,7 @@ describe("Microgeneration", () => {
     expect(fileInputError).toBeInTheDocument();
   });
 
-  it("does not show errors when form input fields are not empty", async () => {
+  it("does not show errors when form input fields are not empty and the file type is correct", async () => {
     const user = userEvent.setup();
 
     render(<Microgeneration />, { wrapper: BrowserRouter });
@@ -116,6 +116,10 @@ describe("Microgeneration", () => {
       expect(
         screen.queryByText("Балансная группа не выбрана."),
       ).not.toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(screen.queryByText("Тип файла не xlsx.")).not.toBeInTheDocument();
     });
 
     await waitFor(() => {
