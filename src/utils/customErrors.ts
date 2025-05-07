@@ -60,3 +60,13 @@ export class UnprocessableReportNineError extends Error {
     Object.setPrototypeOf(this, UnprocessableReportNineError.prototype);
   }
 }
+
+export class UnprocessableOneZoneMetersError extends Error {
+  constructor(message: string) {
+    super(message);
+
+    this.name = "UnprocessableOneZoneMetersError";
+
+    Object.setPrototypeOf(this, UnprocessableOneZoneMetersError.prototype);
+  }
+}
