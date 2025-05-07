@@ -8,6 +8,7 @@ import MatritcaExport from "./pages/matritcaExport/MatritcaExport";
 import Microgeneration from "./pages/microgeneration/Microgeneration";
 import PrivateNotTransferred from "./pages/notTransferred/NotTransferred";
 import Odpy from "./pages/odpy/Odpy";
+import OneZoneMeters from "./pages/oneZoneMeters/OneZoneMeters";
 import Vip from "./pages/vip/Vip";
 import ThemeProvider from "./providers/themeProvider";
 import PersistLogin from "./routes/persistLogin";
@@ -30,6 +31,7 @@ function App() {
                 path="/private-not-transferred"
                 element={<PrivateNotTransferred />}
               />
+              <Route path="/one-zone-meters" element={<OneZoneMeters />} />
             </Route>
           </Route>
         </Route>

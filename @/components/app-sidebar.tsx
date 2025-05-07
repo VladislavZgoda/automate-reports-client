@@ -1,6 +1,7 @@
 import {
   FileMinus,
   FilePlus,
+  FileSliders,
   FileSpreadsheet,
   Home,
   Rows3,
@@ -59,6 +60,11 @@ const items = [
     title: "Не загруженные 25",
     url: "/private-not-transferred",
     icon: FileMinus,
+  },
+  {
+    title: "Изменить однозонные NP7x",
+    url: "/one-zone-meters",
+    icon: FileSliders,
   },
 ];
 
