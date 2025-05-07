@@ -66,6 +66,16 @@ export default function Home() {
         которого удаленны бытовые потребители, показания которых были переданы
         25 числа.
       </p>
+
+      <div className="mt-3 mb-0.5 ml-[-7px] flex items-center gap-1">
+        <Dot strokeWidth="3px" />
+        <h2 className="text-lg font-bold">Изменить однозонные NP7x</h2>
+      </div>
+      <p className="ml-5.5 max-w-3xl text-pretty">
+        Позволяет изменить Т1 и Т2 однозонных счетчиков NP7x из экспорта ПО
+        Sims, в формате xlsx. Для этого нужно нужен файл с серийными номерами
+        записаными в столбец &#34;A&#34;.
+      </p>
     </div>
   );
 }
