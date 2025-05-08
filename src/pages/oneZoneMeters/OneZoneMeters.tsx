@@ -6,6 +6,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+import OneZoneMetersForm from "../../components/OneZoneMetersForm";
+
 export default function OneZoneMeters() {
   return (
     <div className="flex w-full items-center justify-center p-6 md:p-10">
@@ -20,7 +22,9 @@ export default function OneZoneMeters() {
               серийными номерами однозонных счетчиков.
             </CardDescription>
           </CardHeader>
-          <CardContent></CardContent>
+          <CardContent>
+            <OneZoneMetersForm />
+          </CardContent>
         </Card>
       </div>
     </div>
