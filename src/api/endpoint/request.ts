@@ -2,6 +2,7 @@ import {
   AuthError,
   UnprocessableCurrentMeterReadingsError,
   UnprocessableMeterReadingsError,
+  UnprocessableOneZoneMetersError,
   UnprocessablePiramidaFileError,
   UnprocessableReportNineError,
   UnprocessableSimsFileError,
@@ -16,6 +17,7 @@ const response422Schema = z.object({
     "meterReadings",
     "currentMeterReadings",
     "reportNineFile",
+    "oneZoneMetersFile",
   ]),
   message: z.string().min(1),
 });
@@ -26,7 +28,8 @@ type Url =
   | "api/legal-entities/"
   | "api/matritca/"
   | "api/microgeneration/"
-  | "api/private-not-transferred/";
+  | "api/private-not-transferred/"
+  | "api/one-zone-meters/";
 
 export default async function request(
   url: Url,
@@ -51,25 +54,21 @@ export default async function request(
     if (!response422.success)
       throw new Error("Invalid server response for status code 422.");
 
+    const errorMessage = `422 ${response422.data.message}`;
+
     switch (response422.data.file) {
       case "simsFile":
-        throw new UnprocessableSimsFileError(`422 ${response422.data.message}`);
+        throw new UnprocessableSimsFileError(errorMessage);
       case "piramidaFile":
-        throw new UnprocessablePiramidaFileError(
-          `422 ${response422.data.message}`,
-        );
+        throw new UnprocessablePiramidaFileError(errorMessage);
       case "meterReadings":
-        throw new UnprocessableMeterReadingsError(
-          `422 ${response422.data.message}`,
-        );
+        throw new UnprocessableMeterReadingsError(errorMessage);
       case "currentMeterReadings":
-        throw new UnprocessableCurrentMeterReadingsError(
-          `422 ${response422.data.message}`,
-        );
+        throw new UnprocessableCurrentMeterReadingsError(errorMessage);
       case "reportNineFile":
-        throw new UnprocessableReportNineError(
-          `422 ${response422.data.message}`,
-        );
+        throw new UnprocessableReportNineError(errorMessage);
+      case "oneZoneMetersFile":
+        throw new UnprocessableOneZoneMetersError(errorMessage);
     }
   }
 
