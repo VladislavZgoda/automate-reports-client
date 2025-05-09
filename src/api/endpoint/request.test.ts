@@ -5,6 +5,7 @@ import {
   AuthError,
   UnprocessableCurrentMeterReadingsError,
   UnprocessableMeterReadingsError,
+  UnprocessableOneZoneMetersError,
   UnprocessablePiramidaFileError,
   UnprocessableReportNineError,
   UnprocessableSimsFileError,
@@ -199,6 +200,33 @@ describe("request", () => {
       expect(error).toBeInstanceOf(UnprocessableReportNineError);
 
       if (error instanceof UnprocessableReportNineError)
+        expect(error.message).toBe(`422 ${errorMessage}`);
+    }
+  });
+
+  it(`throws UnprocessableOneZoneMetersError if the response status is 422
+    and "oneZoneMetersFile" is invalid`, async () => {
+    const errorMessage =
+      "The xlsx table must have column A with the serial numbers of the meters.";
+
+    server.use(
+      http.post("api/one-zone-meters/", () => {
+        return HttpResponse.json(
+          {
+            file: "oneZoneMetersFile",
+            message: errorMessage,
+          },
+          { status: 422 },
+        );
+      }),
+    );
+
+    try {
+      await request("api/one-zone-meters/", mockToken, mockFormData);
+    } catch (error) {
+      expect(error).toBeInstanceOf(UnprocessableOneZoneMetersError);
+
+      if (error instanceof UnprocessableOneZoneMetersError)
         expect(error.message).toBe(`422 ${errorMessage}`);
     }
   });
