@@ -17,10 +17,10 @@ export default function Select({ onChange, value, ...props }: SelectProps) {
 
   return (
     <SelectPrimitive.Root
-      value={internalValue ?? ""}
+      value={internalValue ?? " "}
       onValueChange={(value) => {
         setInternalValue(value);
-        onChange?.(value);
+        onChange?.(value.trim());
       }}
       {...props}
     >
