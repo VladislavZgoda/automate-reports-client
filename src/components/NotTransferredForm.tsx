@@ -28,25 +28,15 @@ import FormButton from "./formButton/FormButton";
 
 const formSchema = z.object({
   simsFile: z
-    .instanceof(File, {
-      message: "Отсутствует файл экспорта из Sims.",
-    })
-    .refine(
-      (file) =>
-        file.type ===
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      { message: "Тип файла не xlsx." },
-    ),
+    .file({ error: "Отсутствует файл экспорта из Sims." })
+    .mime("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", {
+      error: "Тип файла не xlsx.",
+    }),
   reportNineFile: z
-    .instanceof(File, {
-      message: "Отсутствует файл c отчётом Приложение №9.",
-    })
-    .refine(
-      (file) =>
-        file.type ===
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      { message: "Тип файла не xlsx." },
-    ),
+    .file({ error: "Отсутствует файл c отчётом Приложение №9." })
+    .mime("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", {
+      error: "Тип файла не xlsx.",
+    }),
 });
 
 export default function NotTransferredForm() {

@@ -28,27 +28,17 @@ import FormButton from "./formButton/FormButton";
 
 const formSchema = z.object({
   simsFile: z
-    .instanceof(File, {
-      message: "Отсутствует файл экспорта из Sims.",
-    })
-    .refine(
-      (file) =>
-        file.type ===
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      { message: "Тип файла не xlsx." },
-    ),
+    .file({ error: "Отсутствует файл экспорта из Sims." })
+    .mime("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", {
+      error: "Тип файла не xlsx.",
+    }),
   piramidaFile: z
-    .instanceof(File, {
-      message: "Отсутствует файл экспорта из Пирамида 2.",
-    })
-    .refine(
-      (file) =>
-        file.type ===
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      { message: "Тип файла не xlsx." },
-    ),
+    .file({ error: "Отсутствует файл экспорта из Пирамида 2." })
+    .mime("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", {
+      error: "Тип файла не xlsx.",
+    }),
   controller: z.string().min(1, {
-    message: "Пустое поле.",
+    error: "Пустое поле.",
   }),
 });
 

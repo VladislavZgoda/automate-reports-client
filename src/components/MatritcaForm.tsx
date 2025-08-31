@@ -31,20 +31,14 @@ import Select from "./SelectWithState";
 const formSchema = z
   .object({
     balanceGroup: z.enum(["private", "legal"], {
-      message: "Балансная группа не выбрана.",
+      error: "Балансная группа не выбрана.",
     }),
     controller: z.string().optional(),
     file: z
-      .instanceof(File, {
-        message: "Отсутствует xlsx файл.",
-      })
-      .refine(
-        (file) =>
-          file.type ===
-          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        {
-          message: "Тип файла не xlsx.",
-        },
+      .file({ error: "Отсутствует xlsx файл." })
+      .mime(
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        { error: "Тип файла не xlsx." },
       ),
   })
   .refine(
@@ -52,8 +46,16 @@ const formSchema = z
       data.balanceGroup !== "private" ||
       (data.balanceGroup === "private" && data.controller),
     {
-      message: "Добавьте контроллера, когда выбран Быт.",
+      error: "Добавьте контроллера, когда выбран Быт.",
       path: ["controller"],
+
+      when(payload) {
+        return formSchema
+          .pick({
+            balanceGroup: true,
+          })
+          .safeParse(payload.value).success;
+      },
     },
   );
 

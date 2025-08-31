@@ -30,20 +30,13 @@ import Select from "./SelectWithState";
 
 const formSchema = z.object({
   balanceGroup: z.enum(["private", "legal"], {
-    message: "Балансная группа не выбрана.",
+    error: "Балансная группа не выбрана.",
   }),
   file: z
-    .instanceof(File, {
-      message: "Отсутствует xlsx файл.",
-    })
-    .refine(
-      (file) =>
-        file.type ===
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      {
-        message: "Тип файла не xlsx.",
-      },
-    ),
+    .file({ error: "Отсутствует xlsx файл." })
+    .mime("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", {
+      error: "Тип файла не xlsx.",
+    }),
 });
 
 export default function MicrogenerationForm() {

@@ -28,25 +28,17 @@ import FormButton from "./formButton/FormButton";
 
 const formSchema = z.object({
   simsFile: z
-    .instanceof(File, {
-      message: "Отсутствует файл экспорта из Sims.",
-    })
-    .refine(
-      (file) =>
-        file.type ===
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      { message: "Тип файла не xlsx." },
-    ),
+    .file({ error: "Отсутствует файл экспорта из Sims." })
+    .mime("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", {
+      error: "Тип файла не xlsx.",
+    }),
   oneZoneMetersFile: z
-    .instanceof(File, {
-      message: "Отсутствует файл с однозонными счетчиками.",
+    .file({
+      error: "Отсутствует файл с однозонными счетчиками.",
     })
-    .refine(
-      (file) =>
-        file.type ===
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      { message: "Тип файла не xlsx." },
-    ),
+    .mime("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", {
+      error: "Тип файла не xlsx.",
+    }),
 });
 
 export default function OneZoneMetersForm() {

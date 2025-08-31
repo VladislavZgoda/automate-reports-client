@@ -24,10 +24,10 @@ interface LocationState {
 }
 
 const formSchema = z.object({
-  login: z.string().min(1, { message: "Отсутствует имя учетной записи." }),
+  login: z.string().min(1, { error: "Отсутствует имя учетной записи." }),
   password: z
     .string()
-    .min(1, { message: "Отсутствует пароль от учетной записи." }),
+    .min(1, { error: "Отсутствует пароль от учетной записи." }),
 });
 
 export default function LoginForm() {
