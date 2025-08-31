@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { z } from "zod";
@@ -54,6 +55,7 @@ export default function MicrogenerationForm() {
   const accessToken = authTokenStore.getState().accessToken;
 
   const navigate = useNavigate();
+  const formRef = useRef<HTMLFormElement>(null);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const formData = new FormData();
@@ -67,7 +69,8 @@ export default function MicrogenerationForm() {
 
       downloadFile(blob, "Микрогенерация.xlsx");
 
-      window.location.reload();
+      form.reset();
+      formRef.current?.reset();
     } catch (error) {
       if (error instanceof AuthError) {
         authTokenStore.getState().reset();
@@ -86,7 +89,11 @@ export default function MicrogenerationForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        ref={formRef}
+        className="space-y-8"
+      >
         <FormField
           control={form.control}
           name="balanceGroup"
@@ -104,6 +111,7 @@ export default function MicrogenerationForm() {
                     <SelectValue placeholder="Выберете балансную группу" />
                   </SelectTrigger>
                   <SelectContent>
+                    <SelectItem value=" ">Выберете балансную группу</SelectItem>
                     <SelectItem value="private">БЫТ</SelectItem>
                     <SelectItem value="legal">Юридические лица</SelectItem>
                   </SelectContent>
