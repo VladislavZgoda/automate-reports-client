@@ -2,7 +2,7 @@ import { jwtDecode } from "jwt-decode";
 import { Loader2 } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router";
-import refreshTokenRequest from "../api/auth/refersh/refreshToken";
+import refreshTokenRequest from "../api/auth/refresh/refreshToken";
 import useTheme from "../hooks/useTheme";
 import authTokenStore from "../store/authTokenStore";
 

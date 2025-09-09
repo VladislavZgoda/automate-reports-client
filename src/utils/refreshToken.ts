@@ -1,5 +1,5 @@
 import { jwtDecode } from "jwt-decode";
-import refreshTokenRequest from "../api/auth/refersh/refreshToken";
+import refreshTokenRequest from "../api/auth/refresh/refreshToken";
 import authTokenStore from "../store/authTokenStore";
 
 export default async function refreshToken(token: string) {
