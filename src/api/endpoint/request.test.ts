@@ -1,6 +1,6 @@
-import { Blob } from "buffer";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
+
 import {
   AuthError,
   UnprocessableCurrentMeterReadingsError,
@@ -31,7 +31,7 @@ describe("request", () => {
 
     const blob = await request("api/odpy/", mockToken, mockFormData);
 
-    expect(blob).toBeInstanceOf(Blob);
+    expect(blob).toBeInstanceOf(globalThis.Blob);
   });
 
   it("throws AuthError if the response status is 401", async () => {
