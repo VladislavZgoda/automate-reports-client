@@ -16,14 +16,14 @@ vi.mock(import("jwt-decode"), async (importOriginal) => {
 });
 
 describe("App", () => {
-  it("renders Home component when the user is logged in", async () => {
+  it("renders Home component when the user is logged in", () => {
     authTokenStore.getState().setAccessToken("token");
 
     render(<App />, { wrapper: BrowserRouter });
 
-    const h1HomePage = await screen.findByText(/Разделы меню/);
+    const h1HomePage = screen.getAllByText(/Экспорт Sims Client/);
 
-    expect(h1HomePage).toBeInTheDocument();
+    expect(h1HomePage[0].textContent).toBe("Экспорт Sims Client");
 
     authTokenStore.getState().reset();
   });
